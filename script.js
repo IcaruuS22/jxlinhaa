@@ -1,19 +1,21 @@
 // ============================================
-// CONFIGURAÇÃO DO LINK DE ENTREGA
+// DELIVERY LINK CONFIGURATION
 // ============================================
-// Altere o link abaixo para o seu produto/conteúdo
+// ⚠️ IMPORTANT: Configure the real link of your product/content below
+// The link will be displayed in the success modal after payment is approved
 const DELIVERY_CONFIG = {
-    // Link padrão para todos os planos
+    // Default link for all plans
+    // ⚠️ CHANGE THIS LINK to your real delivery link
     defaultLink: 'https://www.example.com/seu-conteudo',
     
-    // Ou links diferentes por plano (opcional)
+    // Or different links per plan (optional)
     planLinks: {
-        'Mensal': 'https://www.example.com/mensal',
-        'Trimestral': 'https://www.example.com/trimestral',
-        'Anual': 'https://www.example.com/anual'
+        'Monthly': 'https://www.example.com/mensal',
+        'Quarterly': 'https://www.example.com/trimestral',
+        'Annual': 'https://www.example.com/anual'
     },
     
-    // Usar links específicos por plano? (true/false)
+    // Use plan-specific links? (true/false)
     usePlanSpecificLinks: false
 };
 
@@ -85,9 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const video = item.querySelector('video');
         
         if (video) {
-            // Play ao passar o mouse
+            // Play on hover
             item.addEventListener('mouseenter', () => {
-                video.play().catch(err => console.log('Erro ao reproduzir:', err));
+                video.play().catch(err => console.log('Error playing:', err));
             });
             
             // Pause ao tirar o mouse
@@ -176,6 +178,45 @@ document.addEventListener('DOMContentLoaded', function() {
             banner.style.transform = `translate3d(0, ${rate}px, 0)`;
         });
     }
+
+    // Lógica para "See more" na descrição do perfil
+    const profileDesc = document.getElementById('profileDescription');
+    const seeMoreBtn = document.getElementById('seeMoreBtn');
+
+    if (profileDesc && seeMoreBtn) {
+        // Função para verificar se há estouro de conteúdo
+        const checkOverflow = () => {
+            const isOverflowing = profileDesc.scrollHeight > 100;
+            if (isOverflowing) {
+                seeMoreBtn.style.display = 'block';
+            } else {
+                seeMoreBtn.style.display = 'none';
+            }
+        };
+
+        // Verifica inicialmente
+        checkOverflow();
+        
+        // Verifica novamente após o carregamento completo das fontes/imagens
+        window.addEventListener('load', checkOverflow);
+
+        seeMoreBtn.addEventListener('click', function() {
+            const isExpanded = profileDesc.classList.toggle('expanded');
+            seeMoreBtn.textContent = isExpanded ? 'See less' : 'See more';
+            
+            if (!isExpanded) {
+                // Scroll suave para o topo da descrição ao fechar
+                const headerOffset = 100;
+                const elementPosition = profileDesc.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
     
     // Notificações toast (exemplo)
     function showToast(message, type = 'info') {
@@ -257,12 +298,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.classList.remove('far');
                 btn.classList.add('fas');
                 btn.style.color = '#FFD700';
-                showToast('Adicionado aos favoritos! ⭐');
+                showToast('Added to favorites! ⭐');
             } else {
                 btn.classList.remove('fas');
                 btn.classList.add('far');
                 btn.style.color = '';
-                showToast('Removido dos favoritos');
+                showToast('Removed from favorites');
             }
         });
     });
@@ -316,41 +357,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (unlockBtn && lockOverlay && previewVideo) {
-        unlockBtn.addEventListener('click', function() {
-            // Remove o overlay
-            lockOverlay.classList.add('hidden');
-            
-            // Remove o blur do vídeo
-            setTimeout(() => {
-                previewVideo.classList.remove('blurred');
-            }, 100);
-            
-            // Mostra notificação
-            showToast('Conteúdo desbloqueado! 🔓');
-            
-            // Opcional: depois de 3 segundos, volta a bloquear
-            // setTimeout(() => {
-            //     lockOverlay.classList.remove('hidden');
-            //     previewVideo.classList.add('blurred');
-            //     showToast('Conteúdo bloqueado novamente! 🔒');
-            // }, 3000);
-        });
+        // Unlocking is handled after successful payment confirmation
+        // unlockBtn.addEventListener('click', function() {
+        //     ...
+        // });
     }
     
-    // Também adiciona funcionalidade aos botões de assinatura
-    const subscribeBtns = document.querySelectorAll('.subscribe-btn, .subscribe-btn-small');
-    subscribeBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Simula desbloqueio ao clicar em assinar
-            if (lockOverlay && previewVideo) {
-                lockOverlay.classList.add('hidden');
-                setTimeout(() => {
-                    previewVideo.classList.remove('blurred');
-                }, 100);
-                showToast('Bem-vindo! Conteúdo desbloqueado! 🎉');
-            }
-        });
-    });
+    // Also add functionality to subscription buttons
+    // Unlocking is handled after successful payment confirmation
+    // const subscribeBtns = document.querySelectorAll('.subscribe-btn, .subscribe-btn-small');
+    // subscribeBtns.forEach(btn => {
+    //     ...
+    // });
 });
 
 // Função para formatar números
@@ -384,11 +402,11 @@ if (backBtn) {
     });
 }
 
-// Listener para o botão de ajuda
+// Help button listener
 const helpBtn = document.querySelector('.help-btn');
 if (helpBtn) {
     helpBtn.addEventListener('click', function() {
-        alert('Como podemos ajudar você?');
+        alert('How can we help you?');
     });
 }
 
@@ -397,51 +415,61 @@ if (helpBtn) {
 // ============================================
 
 // URL do backend API
-const API_URL = 'http://localhost:3000/api';
+const API_URL = window.location.origin + '/api';
 
-// Verificar se usuário já pagou ao carregar a página
+// Check if user has already paid when loading the page
 async function checkPaymentStatus() {
-    // Verificar se tem email salvo
+    // Check for saved email
     const savedEmail = localStorage.getItem('user_email');
     
     if (savedEmail) {
         try {
             const response = await fetch(`${API_URL}/subscription-status/${encodeURIComponent(savedEmail)}`);
+            if (!response.ok) throw new Error('Failed to fetch status');
             const data = await response.json();
             
             if (data.success && data.hasActiveSubscription) {
+                // Subscription confirmed by webhook - unlock everything
                 unlockAllContent();
                 showPaymentStatus(data.subscription);
                 return;
             }
         } catch (error) {
-            console.error('Erro ao verificar status:', error);
+            console.error('Error checking status:', error);
         }
     }
     
-    // Fallback: verificar localStorage antigo
+    // Fallback: check old localStorage (if webhook hasn't processed yet)
     const hasPaid = localStorage.getItem('subscription_active');
     if (hasPaid === 'true') {
         unlockAllContent();
         showPaymentStatus(null);
+        
+        // Try checking again after a few seconds (in case webhook is processing)
+        const savedEmail = localStorage.getItem('user_email');
+        if (savedEmail) {
+            setTimeout(async () => {
+                await checkPaymentStatus();
+            }, 5000);
+        }
     }
 }
 
-// Desbloquear todo o conteúdo
+// Unlock all content
 function unlockAllContent() {
-    // Remove blur do vídeo central
+    // Remove blur from central video
     const previewVideo = document.getElementById('previewVideo');
     if (previewVideo) {
         previewVideo.classList.remove('blurred');
     }
     
-    // Esconde o overlay de bloqueio
+    // Hide block overlay
     const lockOverlay = document.getElementById('lockOverlay');
     if (lockOverlay) {
         lockOverlay.style.display = 'none';
     }
     
-    // Remove blur de todos os itens da grade de mídia
+    // Remove blur from all media grid items
     const mediaItems = document.querySelectorAll('.media-item');
     mediaItems.forEach(item => {
         item.classList.remove('blurred');
@@ -451,103 +479,132 @@ function unlockAllContent() {
         }
     });
     
-    // Permite reprodução dos vídeos
+    // Allow video playback
     const videos = document.querySelectorAll('video');
     videos.forEach(video => {
         video.controls = true;
     });
 }
 
-// Mostrar status de pagamento confirmado
+// Show confirmed payment status
 function showPaymentStatus(subscription) {
     const subscriptionSection = document.querySelector('.subscription-section');
     if (subscriptionSection) {
         let expiresInfo = '';
         if (subscription && subscription.expires_at) {
             const expiresDate = new Date(subscription.expires_at);
-            expiresInfo = `<p>Expira em: ${expiresDate.toLocaleDateString('pt-BR')}</p>`;
+            expiresInfo = `<p>Expires on: ${expiresDate.toLocaleDateString('en-US')}</p>`;
         }
         
         const statusHTML = `
             <div class="payment-status">
-                <h4>✓ Assinatura Ativa</h4>
-                <p>Você tem acesso completo ao conteúdo</p>
+                <h4>✓ Active Subscription</h4>
+                <p>You have full access to the content</p>
                 ${expiresInfo}
             </div>
         `;
         subscriptionSection.innerHTML = statusHTML;
     }
     
-    // Também atualizar sidebar
+    // Also update sidebar
     const subscriptionCard = document.querySelector('.subscription-card');
     if (subscriptionCard) {
         const statusHTML = `
-            <h3>ASSINATURA</h3>
+            <h3>SUBSCRIPTION</h3>
             <div class="payment-status">
-                <h4>✓ Assinatura Ativa</h4>
-                <p>Acesso completo</p>
+                <h4>✓ Active Subscription</h4>
+                <p>Full access</p>
             </div>
         `;
         subscriptionCard.innerHTML = statusHTML;
     }
 }
 
-// Processar pagamento aprovado
+// Process approved payment
 async function handlePaymentApproved(details, planName, planPrice, email) {
-    console.log('Pagamento aprovado:', details);
+    console.log('Payment approved:', details);
     
-    // Salvar email do usuário
+    // Save user email
     localStorage.setItem('user_email', email);
     localStorage.setItem('subscription_active', 'true'); // Fallback
     
-    // Desbloquear conteúdo
+    // Unlock content immediately (optimistic)
     unlockAllContent();
     
-    // Mostrar mensagem de sucesso
+    // Show success message
     showPaymentStatus(null);
     
-    // Mostrar modal de sucesso com link de entrega
+    // Show success modal with delivery link
     showSuccessModal(planName, planPrice, email);
     
-    // Verificar status atualizado do backend
-    setTimeout(async () => {
-        await checkPaymentStatus();
-    }, 2000);
+    // Polling to check if webhook processed the payment
+    // The webhook may take a few seconds to update the status
+    let attempts = 0;
+    const maxAttempts = 10; // 10 attempts = ~20 seconds
+    
+    const checkWebhookStatus = setInterval(async () => {
+        attempts++;
+        
+        try {
+            const response = await fetch(`${API_URL}/subscription-status/${encodeURIComponent(email)}`);
+            if (response.ok) {
+                const data = await response.json();
+                
+                if (data.success && data.hasActiveSubscription) {
+                    // Webhook processed! Update full status
+                    clearInterval(checkWebhookStatus);
+                    showPaymentStatus(data.subscription);
+                    console.log('✅ Webhook confirmed - Subscription active on backend');
+                }
+            }
+            
+            if (attempts >= maxAttempts) {
+                // Timeout - stop polling
+                clearInterval(checkWebhookStatus);
+                console.warn('⚠️ Webhook not confirmed after 20 seconds, but payment was approved');
+            }
+        } catch (error) {
+            console.error('Error checking webhook status:', error);
+            if (attempts >= maxAttempts) {
+                clearInterval(checkWebhookStatus);
+            }
+        }
+    }, 2000); // Check every 2 seconds
 }
 
-// Mostrar modal de sucesso após pagamento
+// Show success modal after payment
 function showSuccessModal(planName, planPrice, email) {
     const modal = document.getElementById('successModal');
     const planDetails = document.getElementById('successPlanDetails');
     const deliveryLink = document.getElementById('deliveryLink');
     
-    // Atualizar detalhes do plano
-    planDetails.textContent = `Plano ${planName} - $${planPrice}`;
+    // Update plan details
+    planDetails.textContent = `Plan ${planName} - $${planPrice}`;
     
-    // Configurar link de entrega
+    // Configure delivery link
     let linkUrl = DELIVERY_CONFIG.defaultLink;
     
     if (DELIVERY_CONFIG.usePlanSpecificLinks && DELIVERY_CONFIG.planLinks[planName]) {
         linkUrl = DELIVERY_CONFIG.planLinks[planName];
     }
     
-    // Adicionar email como parâmetro (opcional - útil para rastreamento)
+    // Add email as parameter (optional - useful for tracking)
     const urlWithParams = new URL(linkUrl);
     urlWithParams.searchParams.set('email', email);
     urlWithParams.searchParams.set('plan', planName);
     
     deliveryLink.href = urlWithParams.toString();
     
-    // Mostrar modal
+    // Show modal
     modal.classList.add('active');
     
-    // Fechar modal ao clicar no botão
+    // Close modal when clicking the button
     const closeBtn = document.getElementById('closeSuccess');
     closeBtn.onclick = function() {
         modal.classList.remove('active');
     };
     
-    // Fechar ao clicar fora
+    // Close when clicking outside
     modal.onclick = function(e) {
         if (e.target === modal) {
             modal.classList.remove('active');
@@ -555,54 +612,59 @@ function showSuccessModal(planName, planPrice, email) {
     };
 }
 
-// Variável global para armazenar o plano atual
+// Global variable to store current plan
 let currentPaymentPlan = null;
 
-// Abrir modal de pagamento
+// Open payment modal
 function openPaymentModal(planName, planPrice, planDescription) {
     const modal = document.getElementById('paymentModal');
     const planInfo = document.getElementById('paymentPlanInfo');
     const container = document.getElementById('paypal-button-container');
     const emailInput = document.getElementById('payerEmail');
     
-    // Atualizar informações do plano
+    // Update plan information
     planInfo.textContent = `${planDescription} - $${planPrice}`;
     
-    // Limpar container anterior
-    container.innerHTML = '';
-    
-    // Preencher email se já tiver salvo
+    // Pre-fill email if already saved
     const savedEmail = localStorage.getItem('user_email');
     if (savedEmail) {
         emailInput.value = savedEmail;
     }
     
-    // Verificar se PayPal SDK está carregado
+    // Show modal FIRST (to avoid popup blocker due to hidden element)
+    modal.classList.add('active');
+    
+    // Clear previous container
+    container.innerHTML = '';
+    
+    // Check if PayPal SDK is loaded
     if (typeof paypal === 'undefined') {
-        alert('Erro ao carregar PayPal. Recarregue a página.');
+        alert('Error loading PayPal. Please reload the page.');
         return;
     }
     
-    // Renderizar botão PayPal
-    paypal.Buttons({
-        style: {
-            layout: 'vertical',
-            color: 'blue',
-            shape: 'rect',
-            label: 'pay',
-            height: 50
-        },
-        createOrder: async function(data, actions) {
-            // Validar email
-            const email = emailInput.value.trim();
-            if (!email || !email.includes('@')) {
-                alert('Por favor, insira um email válido!');
-                throw new Error('Email inválido');
-            }
-            
-            try {
-                // Criar order via backend
-                const response = await fetch(`${API_URL}/create-order`, {
+    // Small delay to ensure the modal is visible and ready
+    setTimeout(() => {
+        // Render PayPal button
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'blue',
+                shape: 'rect',
+                label: 'pay',
+                height: 50
+            },
+            createOrder: function(data, actions) {
+                // Validate email
+                const email = emailInput.value.trim();
+                if (!email || !email.includes('@')) {
+                    alert('Please enter a valid email!');
+                    return Promise.reject(new Error('Invalid email'));
+                }
+                
+                // Return the fetch promise directly to PayPal
+                // This is faster than using async/await and helps avoid the popup blocker
+                return fetch(`${API_URL}/create-order`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -612,28 +674,29 @@ function openPaymentModal(planName, planPrice, planDescription) {
                         plan: planName,
                         amount: planPrice
                     })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error || 'Failed to create order'); });
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    if (!result.success) {
+                        throw new Error(result.error || 'Error creating order');
+                    }
+                    // Save email temporarily
+                    localStorage.setItem('temp_email', email);
+                    return result.orderId;
+                })
+                .catch(error => {
+                    console.error('Error creating order:', error);
+                    alert(error.message || 'Error creating payment. Please try again.');
+                    throw error;
                 });
-                
-                const result = await response.json();
-                
-                if (!result.success) {
-                    throw new Error(result.error || 'Erro ao criar order');
-                }
-                
-                // Salvar email temporariamente
-                localStorage.setItem('temp_email', email);
-                
-                return result.orderId;
-            } catch (error) {
-                console.error('Erro ao criar order:', error);
-                alert('Erro ao criar pagamento. Tente novamente.');
-                throw error;
-            }
-        },
-        onApprove: async function(data, actions) {
-            try {
-                // Capturar pagamento via backend
-                const response = await fetch(`${API_URL}/capture-payment`, {
+            },
+            onApprove: function(data, actions) {
+                return fetch(`${API_URL}/capture-payment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -641,97 +704,102 @@ function openPaymentModal(planName, planPrice, planDescription) {
                     body: JSON.stringify({
                         orderId: data.orderID
                     })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error || 'Failed to capture payment'); });
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    if (!result.success) {
+                        throw new Error(result.error || 'Error capturing payment');
+                    }
+                    
+                    // Retrieve email
+                    const email = localStorage.getItem('temp_email') || emailInput.value;
+                    localStorage.removeItem('temp_email');
+                    
+                    // Close modal
+                    closePaymentModal();
+                    
+                    // Process approval
+                    return handlePaymentApproved(result.data, planName, planPrice, email);
+                })
+                .catch(error => {
+                    console.error('Error approving payment:', error);
+                    alert(error.message || 'Error processing payment. Please contact support.');
                 });
-                
-                const result = await response.json();
-                
-                if (!result.success) {
-                    throw new Error(result.error || 'Erro ao capturar pagamento');
+            },
+            onError: function(err) {
+                console.error('Payment error:', err);
+                // Only show alert if it's not a window close/cancel error
+                if (err.message && !err.message.includes('popup_close')) {
+                    alert('Error processing payment. Please try again.');
                 }
-                
-                // Recuperar email
-                const email = localStorage.getItem('temp_email') || emailInput.value;
-                localStorage.removeItem('temp_email');
-                
-                // Fechar modal
-                closePaymentModal();
-                
-                // Processar aprovação
-                await handlePaymentApproved(result.data, planName, planPrice, email);
-                
-            } catch (error) {
-                console.error('Erro ao aprovar pagamento:', error);
-                alert('Erro ao processar pagamento. Entre em contato com o suporte.');
+            },
+            onCancel: function(data) {
+                console.log('Payment canceled by user');
             }
-        },
-        onError: function(err) {
-            console.error('Erro no pagamento:', err);
-            alert('Erro ao processar pagamento. Tente novamente.');
-        },
-        onCancel: function(data) {
-            console.log('Pagamento cancelado pelo usuário');
-        }
-    }).render('#paypal-button-container');
-    
-    // Mostrar modal
-    modal.classList.add('active');
+        }).render('#paypal-button-container');
+    }, 100);
 }
 
-// Fechar modal de pagamento
+// Close payment modal
 function closePaymentModal() {
     const modal = document.getElementById('paymentModal');
     modal.classList.remove('active');
 }
 
-// Event listeners para os botões de assinatura
+// Event listeners for subscription buttons
 function initSubscriptionButtons() {
-    // Botão Mensal - Main
+    // Monthly Button - Main
     const monthlyBtn = document.getElementById('subscribeMonthly');
     if (monthlyBtn) {
         monthlyBtn.addEventListener('click', function() {
-            openPaymentModal('Mensal', '3.75', 'Assinatura Mensal (31 dias)');
+            openPaymentModal('Monthly', '12.99', 'Monthly Subscription (31 days)');
         });
     }
     
-    // Botão Trimestral
+    // Quarterly Button
     const quarterlyBtn = document.getElementById('subscribeQuarterly');
     if (quarterlyBtn) {
         quarterlyBtn.addEventListener('click', function() {
-            openPaymentModal('Trimestral', '9.99', 'Assinatura Trimestral (3 meses)');
+            openPaymentModal('Quarterly', '34.99', 'Quarterly Subscription (3 months)');
         });
     }
     
-    // Botão Anual
+    // Yearly Button
     const yearlyBtn = document.getElementById('subscribeYearly');
     if (yearlyBtn) {
         yearlyBtn.addEventListener('click', function() {
-            openPaymentModal('Anual', '29.99', 'Assinatura Anual (12 meses)');
+            openPaymentModal('Annual', '59.90', 'Annual Subscription (12 months)');
         });
     }
     
-    // Botão Sidebar
+    // Sidebar Button
     const sidebarBtn = document.getElementById('subscribeSidebar');
     if (sidebarBtn) {
         sidebarBtn.addEventListener('click', function() {
-            openPaymentModal('Mensal', '3.75', 'Assinatura Mensal (31 dias)');
+            openPaymentModal('Monthly', '12.99', 'Monthly Subscription (31 days)');
         });
     }
     
-    // Botão "INSCREVE-TE" da área bloqueada
+    // "SUBSCRIBE" button from locked area
     const unlockBtn = document.getElementById('unlockBtn');
     if (unlockBtn) {
         unlockBtn.addEventListener('click', function() {
-            openPaymentModal('Mensal', '3.75', 'Assinatura Mensal (31 dias)');
+            openPaymentModal('Monthly', '12.99', 'Monthly Subscription (31 days)');
         });
     }
     
-    // Botão de fechar modal
+    // Close modal button
     const closeBtn = document.getElementById('closeModal');
     if (closeBtn) {
         closeBtn.addEventListener('click', closePaymentModal);
     }
     
-    // Clicar fora do modal para fechar
+    // Click outside modal to close
     const modal = document.getElementById('paymentModal');
     if (modal) {
         modal.addEventListener('click', function(e) {
@@ -741,7 +809,7 @@ function initSubscriptionButtons() {
         });
     }
     
-    // Tecla ESC para fechar modal
+    // ESC key to close modal
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closePaymentModal();
@@ -749,7 +817,7 @@ function initSubscriptionButtons() {
     });
 }
 
-// Inicializar tudo quando a página carregar
+// Initialize everything when the page loads
 window.addEventListener('load', function() {
     checkPaymentStatus();
     initSubscriptionButtons();
@@ -757,5 +825,5 @@ window.addEventListener('load', function() {
 
 // Debug helpers
 console.log('🔧 Backend API:', API_URL);
-console.log('💡 Para resetar (teste): localStorage.clear()');
+console.log('💡 To reset (test): localStorage.clear()');
 

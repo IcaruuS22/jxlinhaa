@@ -1,45 +1,45 @@
 // ========================================
-// FUNÇÕES DE FORMATAÇÃO DE TELEFONE
+// PHONE FORMATTING FUNCTIONS
 // ========================================
 
 /**
- * Formata um número de telefone brasileiro
- * @param {string} phone - Número de telefone (pode conter ou não formatação)
- * @returns {string} - Número formatado como (11) 9 9999-9999
+ * Formats a Brazilian phone number
+ * @param {string} phone - Phone number (may or may not contain formatting)
+ * @returns {string} - Number formatted as (11) 9 9999-9999
  */
 function formatPhoneNumber(phone) {
     if (!phone) return '';
     
-    // Remove tudo que não é número
+    // Remove everything that is not a number
     const numbers = phone.replace(/\D/g, '');
     
-    // Verifica se tem 11 dígitos (padrão brasileiro com DDD)
+    // Check if it has 11 digits (Brazilian standard with DDD)
     if (numbers.length === 11) {
         return `(${numbers.substring(0, 2)}) ${numbers.substring(2, 3)} ${numbers.substring(3, 7)}-${numbers.substring(7, 11)}`;
     }
-    // Se tiver 10 dígitos (telefone fixo)
+    // If it has 10 digits (landline)
     else if (numbers.length === 10) {
         return `(${numbers.substring(0, 2)}) ${numbers.substring(2, 6)}-${numbers.substring(6, 10)}`;
     }
-    // Retorna o número original se não se encaixar nos padrões
+    // Return original number if it doesn't fit patterns
     return phone;
 }
 
 /**
- * Aplica máscara de telefone enquanto o usuário digita
- * @param {string} value - Valor atual do input
- * @returns {string} - Valor formatado
+ * Applies phone mask while the user types
+ * @param {string} value - Current input value
+ * @returns {string} - Formatted value
  */
 function applyPhoneMask(value) {
     if (!value) return '';
     
-    // Remove tudo que não é número
+    // Remove everything that is not a number
     let numbers = value.replace(/\D/g, '');
     
-    // Limita a 11 dígitos
+    // Limit to 11 digits
     numbers = numbers.substring(0, 11);
     
-    // Aplica a máscara conforme o usuário digita
+    // Apply mask as user types
     if (numbers.length <= 2) {
         return numbers;
     } else if (numbers.length <= 3) {
@@ -52,302 +52,302 @@ function applyPhoneMask(value) {
 }
 
 /**
- * Remove formatação do telefone, deixando apenas números
- * @param {string} phone - Telefone formatado
- * @returns {string} - Apenas números
+ * Removes phone formatting, leaving only numbers
+ * @param {string} phone - Formatted phone
+ * @returns {string} - Numbers only
  */
 function unformatPhoneNumber(phone) {
     if (!phone) return '';
     return phone.replace(/\D/g, '');
 }
 
-// Categorias Bloom
+// Bloom Categories
 const categories = [
-    { id: 'all', name: 'Todos', icon: 'fas fa-th' },
-    { id: 'destaques', name: 'Destaques', icon: 'fas fa-star' },
+    { id: 'all', name: 'All', icon: 'fas fa-th' },
+    { id: 'destaques', name: 'Highlights', icon: 'fas fa-star' },
     { id: 'social', name: 'Social', icon: 'fas fa-hashtag' },
-    { id: 'ferramentas', name: 'Ferramentas', icon: 'fas fa-tools' },
-    { id: 'modelo', name: 'Modelo', icon: 'fas fa-user' },
-    { id: 'outros', name: 'Outros', icon: 'fas fa-box' }
+    { id: 'ferramentas', name: 'Tools', icon: 'fas fa-tools' },
+    { id: 'modelo', name: 'Model', icon: 'fas fa-user' },
+    { id: 'outros', name: 'Others', icon: 'fas fa-box' }
 ];
 
-// Dados dos produtos
+// Product Data
 const products = [
     {
         id: 1,
-        title: "Tela Privacy Nova",
-        price: "R$ 90,00",
-        originalPrice: "R$ 150,00",
+        title: "New Privacy Screen",
+        price: "$ 90.00",
+        originalPrice: "$ 150.00",
         category: "all",
         newCategory: "destaques",
         image: "video",
         videoUrl: "../assets/imagens/New Privacy.mp4",
         autoDelivery: true,
-        description: "✅ Tela Atualizada 2025 Quase Idêntica\n✅ Sistema de Entregável após confirmação de compra + Coleta de dados pra LTV\n✅ Dashboard própria com track de onde veio o Lead (Orgânico ou Tráfego Pago)\n✅ Sistema de pagamento PIX integrado SEM SAIR DA LANDING PAGE com QR Code automático e verificação em tempo real\n✅ Galeria interativa com blur effects, hover autoplay nos vídeos e marca d'água personalizada\n✅ Facebook Pixel configurado + lead tracking + UTM parameters para máxima conversão\n✅ ENTREGA IMEDIATA: código fonte completo + assets + documentação\n✅ Fácil Personalização: só trocar fotos/vídeos/pixel está pronto para vender",
+        description: "✅ Updated 2025 Screen, Almost Identical\n✅ Deliverable system after purchase confirmation + Data collection for LTV\n✅ Own dashboard with tracking of where the Lead came from (Organic or Paid Traffic)\n✅ Integrated PayPal payment system with automatic verification\n✅ Interactive gallery with blur effects, hover autoplay on videos and personalized watermark\n✅ Configured Facebook Pixel + lead tracking + UTM parameters for maximum conversion\n✅ IMMEDIATE DELIVERY: complete source code + assets + documentation\n✅ Easy Customization: just change photos/videos/pixel and it's ready to sell",
         downloadLinks: {
             main: "https://drive.google.com/drive/folders/1emzV8VdfoskXkJiIKOj9Re3mkJAzwEpS?usp=sharing",
             backup: "https://drive.google.com/drive/folders/1emzV8VdfoskXkJiIKOj9Re3mkJAzwEpS?usp=sharing",
-            instructions: "📋 Tela Privacy Nova completa: código fonte, assets, documentação, configuração de pixel e notificações"
+            instructions: "📋 Complete New Privacy Screen: source code, assets, documentation, pixel configuration and notifications"
         }
     },
     {
         id: 2,
-        title: "Tela OnlyFans",
-        price: "R$ 90,00",
-        originalPrice: "R$ 150,00",
+        title: "OnlyFans Screen",
+        price: "$ 90.00",
+        originalPrice: "$ 150.00",
         category: "hot",
         newCategory: "destaques",
         image: "video",
         videoUrl: "../assets/imagens/new onlyfans.mp4",
         autoDelivery: true,
-        description: "✅ Tela Atualizada 2025 Quase Idêntica\n✅ Sistema de Entregável após confirmação de compra + Coleta de dados pra LTV\n✅ Dashboard própria com track de onde veio o Lead (Orgânico ou Tráfego Pago)\n✅ Sistema de pagamento PIX integrado SEM SAIR DA LANDING PAGE com QR Code automático e verificação em tempo real\n✅ Galeria interativa com blur effects, hover autoplay nos vídeos e marca d'água personalizada\n✅ Facebook Pixel configurado + lead tracking + UTM parameters para máxima conversão\n✅ ENTREGA IMEDIATA: código fonte completo + assets + documentação\n✅ Fácil Personalização: só trocar fotos/vídeos/pixel está pronto para vender",
+        description: "✅ Updated 2025 Screen, Almost Identical\n✅ Deliverable system after purchase confirmation + Data collection for LTV\n✅ Own dashboard with tracking of where the Lead came from (Organic or Paid Traffic)\n✅ Integrated PayPal payment system with automatic verification\n✅ Interactive gallery with blur effects, hover autoplay on videos and personalized watermark\n✅ Configured Facebook Pixel + lead tracking + UTM parameters for maximum conversion\n✅ IMMEDIATE DELIVERY: complete source code + assets + documentation\n✅ Easy Customization: just change photos/videos/pixel and it's ready to sell",
         downloadLinks: {
             main: "https://drive.google.com/drive/folders/1Fpz7hWKFSsjV_SkARftrqunFBMMzotzs?usp=sharing",
             backup: "https://drive.google.com/drive/folders/1Fpz7hWKFSsjV_SkARftrqunFBMMzotzs?usp=sharing",
-            instructions: "📋 Tela OnlyFans completa: código fonte, assets, documentação, configuração de pixel e notificações"
+            instructions: "📋 Complete OnlyFans Screen: source code, assets, documentation, pixel configuration and notifications"
         }
     },
     {
         id: 3,
-        title: "Tela Privacy Antiga",
-        price: "R$ 65,00",
-        originalPrice: "R$ 120,00",
+        title: "Old Privacy Screen",
+        price: "$ 65.00",
+        originalPrice: "$ 120.00",
         category: "hot",
         newCategory: "destaques",
         image: "video",
         videoUrl: "../assets/imagens/old privacy.mp4",
         autoDelivery: true,
-        description: "✅ Tela Escalada, Funcional mas no modelo Antigo\n✅ Sistema de Entregável após confirmação de compra + Coleta de dados pra LTV\n✅ Dashboard própria com track de onde veio o Lead (Orgânico ou Tráfego Pago)\n✅ Sistema de pagamento PIX integrado SEM SAIR DA LANDING PAGE com QR Code automático e verificação em tempo real\n✅ Galeria interativa com blur effects, hover autoplay nos vídeos e marca d'água personalizada\n✅ Facebook Pixel configurado + lead tracking + UTM parameters para máxima conversão\n✅ ENTREGA IMEDIATA: código fonte completo + assets + documentação\n✅ Fácil Personalização: só trocar fotos/vídeos/pixel está pronto para vender",
+        description: "✅ Scaled, Functional Screen but in the Old model\n✅ Deliverable system after purchase confirmation + Data collection for LTV\n✅ Own dashboard with tracking of where the Lead came from (Organic or Paid Traffic)\n✅ Integrated PayPal payment system with automatic verification\n✅ Interactive gallery with blur effects, hover autoplay on videos and personalized watermark\n✅ Configured Facebook Pixel + lead tracking + UTM parameters for maximum conversion\n✅ IMMEDIATE DELIVERY: complete source code + assets + documentation\n✅ Easy Customization: just change photos/videos/pixel and it's ready to sell",
         downloadLinks: {
             main: "https://drive.google.com/drive/folders/1SDH-yXJqEgyMCpgGmNXwqgHvc2yyiJL2?usp=sharing",
             backup: "https://drive.google.com/drive/folders/1SDH-yXJqEgyMCpgGmNXwqgHvc2yyiJL2?usp=sharing",
-            instructions: "📋 Tela Privacy Antiga completa: código fonte, assets, documentação, configuração de pixel e notificações"
+            instructions: "📋 Complete Old Privacy Screen: source code, assets, documentation, pixel configuration and notifications"
         }
     },
     {
         id: 4,
-        title: "Landing Page [Modelo a km de você]",
-        price: "R$ 12,90",
+        title: "Landing Page [Model km away from you]",
+        price: "$ 12.90",
         category: "ferramentas",
         newCategory: "ferramentas",
         image: "video",
         videoUrl: "../assets/imagens/lp editada.mp4",
         autoDelivery: true,
-        description: "🚀 Landing Page Modelo Está a 5km de você\n🎯 Autohover e autoplay no fundo\n🔗 Redirect pra onde quiser\n💥 Alta conversão",
+        description: "🚀 Landing Page Model is 5km from you\n🎯 Autohover and autoplay in background\n🔗 Redirect to wherever you want\n💥 High conversion",
         downloadLinks: {
             main: "https://drive.google.com/drive/folders/1eCGFe2ATW5vIDInr5AYRxf5PYPDs9hkU?usp=sharing",
             backup: "https://drive.google.com/drive/folders/1eCGFe2ATW5vIDInr5AYRxf5PYPDs9hkU?usp=sharing",
-            instructions: "📋 Landing Page completa com código fonte, assets e documentação"
+            instructions: "📋 Complete Landing Page with source code, assets and documentation"
         }
     },
     {
         id: 5,
-        title: "Corte de Fotos/Vídeos em Massa",
-        price: "R$ 19,90",
+        title: "Mass Photo/Video Cropping",
+        price: "$ 19.90",
         category: "all",
         newCategory: "ferramentas",
         image: "../assets/imagens/corte em massa.jpg",
         type: "image",
         autoDelivery: true,
-        description: "🖼️ Corte Automático de Fotos e Vídeos\n✂️ Processa múltiplos arquivos de uma vez\n🎯 Ferramentas profissionais: crop_tool.py e video_crop_tool.py\n⚡ Executável .bat para facilitar o uso\n💾 Scripts Python prontos para usar",
+        description: "🖼️ Automatic Photo and Video Cropping\n✂️ Process multiple files at once\n🎯 Professional tools: crop_tool.py and video_crop_tool.py\n⚡ .bat executable for easy use\n💾 Ready-to-use Python scripts",
         downloadLinks: {
             main: "https://drive.google.com/drive/folders/1wOxLQcvK1thkPuLNWbmDwN4HzOoGPgUx?usp=drive_link",
             backup: "https://drive.google.com/drive/folders/1wOxLQcvK1thkPuLNWbmDwN4HzOoGPgUx?usp=drive_link",
-            instructions: "📋 Ferramentas de corte em massa: crop_tool.py, video_crop_tool.py e executar.bat"
+            instructions: "📋 Mass cropping tools: crop_tool.py, video_crop_tool.py and execute.bat"
         }
     },
     {
         id: 6,
-        title: "Encomenda Pessoal",
+        title: "Personal Order",
         price: "",
         category: "all",
         newCategory: "outros",
         image: "../assets/imagens/encomenda-pessoal.jpg",
         type: "image",
-        description: "🎯 Solução Personalizada para Sua Operação\n💬 Conte-nos o que você precisa\n🚀 Desenvolvemos exatamente o que falta\n📱 Entre em contato: (71) 99292-6937"
+        description: "🎯 Personalized Solution for Your Operation\n💬 Tell us what you need\n🚀 We develop exactly what's missing\n📱 Contact us: (71) 99292-6937"
     },
     {
         id: 7,
-        title: "Modelos Pra Escalar",
-        price: "R$ 100,00",
-        originalPrice: "R$ 180,00",
+        title: "Models To Scale",
+        price: "$ 100.00",
+        originalPrice: "$ 180.00",
         category: "all",
         newCategory: "modelo",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "background",
         autoDelivery: true,
         hasModelSelection: true,
-        description: "👥 Modelos Profissionais para Escalar Seu Negócio\n📸 Fotos em alta qualidade para usar em suas campanhas\n🎯 Múltiplos modelos disponíveis (Catgirl, Paola Rosalina, Latoxicasz, Liiias)\n✅ Sistema de seleção interativo com carrossel\n💼 Ideal para e-commerce, marketing e produtos",
+        description: "👥 Professional Models to Scale Your Business\n📸 High-quality photos to use in your campaigns\n🎯 Multiple models available (Catgirl, Paola Rosalina, Latoxicasz, Liiias)\n✅ Interactive selection system with carousel\n💼 Ideal for e-commerce, marketing and products",
         models: (typeof CARROSSEL_MODELOS_CONFIG !== 'undefined' && CARROSSEL_MODELOS_CONFIG) ? CARROSSEL_MODELOS_CONFIG.modelos : [
             {
                 id: 1,
-                name: "Modelo Feminino 1",
+                name: "Female Model 1",
                 image: "../assets/modelos/modelo1.jpg",
-                description: "Modelo profissional feminino para campanhas"
+                description: "Professional female model for campaigns"
             },
             {
                 id: 2,
-                name: "Modelo Feminino 2", 
+                name: "Female Model 2", 
                 image: "../assets/modelos/modelo2.jpg",
-                description: "Modelo elegante para produtos de beleza"
+                description: "Elegant model for beauty products"
             },
             {
                 id: 3,
-                name: "Modelo Masculino 1",
+                name: "Male Model 1",
                 image: "../assets/modelos/modelo3.jpg", 
-                description: "Modelo masculino para produtos masculinos"
+                description: "Male model for men's products"
             },
             {
                 id: 4,
-                name: "Modelo Feminino 3",
+                name: "Female Model 3",
                 image: "../assets/modelos/modelo4.jpg",
-                description: "Modelo jovem para produtos fashion"
+                description: "Young model for fashion products"
             },
             {
                 id: 5,
-                name: "Modelo Masculino 2",
+                name: "Male Model 2",
                 image: "../assets/modelos/modelo5.jpg",
-                description: "Modelo fitness para produtos esportivos"
+                description: "Fitness model for sports products"
             },
             {
                 id: 6,
-                name: "Modelo Feminino 4",
+                name: "Female Model 4",
                 image: "../assets/modelos/modelo6.jpg",
-                description: "Modelo plus size para inclusividade"
+                description: "Plus size model for inclusivity"
             }
         ],
         downloadLinks: {
             main: "https://drive.google.com/drive/folders/1eCGFe2ATW5vIDInr5AYRxf5PYPDs9hkU?usp=drive_link",
             backup: "https://drive.google.com/drive/folders/1eCGFe2ATW5vIDInr5AYRxf5PYPDs9hkU?usp=drive_link",
-            instructions: "📋 Modelos profissionais para escalar seu negócio"
+            instructions: "📋 Professional models to scale your business"
         }
     },
     {
         id: 8,
-        title: "Tela Fake Privacy",
-        price: "R$ 147,90",
-        originalPrice: "R$ 250,00",
+        title: "Fake Privacy Screen",
+        price: "$ 147.90",
+        originalPrice: "$ 250.00",
         category: "destaques",
         newCategory: "destaques",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "⭐ Tela Privacy Atualizada 2025\n✅ Sistema de pagamento PIX integrado\n🔥 Entrega automática após pagamento\n📊 Dashboard com tracking completo\n🎯 Galeria interativa profissional"
+        description: "⭐ Updated 2025 Privacy Screen\n✅ Integrated PayPal payment system\n🔥 Automatic delivery after payment\n📊 Dashboard with complete tracking\n🎯 Professional interactive gallery"
     },
     {
         id: 9,
-        title: "Verificado Modelo Black",
-        price: "R$ 197,00",
-        originalPrice: "R$ 297,00",
+        title: "Verified Black Model",
+        price: "$ 197.00",
+        originalPrice: "$ 297.00",
         category: "destaques",
         newCategory: "destaques",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "✅ Verificado Azul Instantâneo\n🔥 Sistema Black Premium\n⚡ Entrega rápida garantida\n💎 Modelo exclusivo 2025\n🎯 Suporte prioritário incluído"
+        description: "✅ Instant Blue Verification\n🔥 Premium Black System\n⚡ Guaranteed fast delivery\n💎 Exclusive 2025 Model\n🎯 Priority support included"
     },
     {
         id: 10,
-        title: "Copys Validadas Oliveira",
-        price: "R$ 50,00",
-        originalPrice: "R$ 297,00",
+        title: "Validated Oliveira Copys",
+        price: "$ 50.00",
+        originalPrice: "$ 297.00",
         category: "destaques",
         newCategory: "destaques",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "📝 Copys testadas e aprovadas\n💰 Alta taxa de conversão\n🚀 Metodologia Oliveira exclusiva\n✅ Mais de 500 copys prontas\n🎯 Ideais para anúncios e vendas"
+        description: "📝 Tested and approved copys\n💰 High conversion rate\n🚀 Exclusive Oliveira methodology\n✅ Over 500 ready-to-use copys\n🎯 Ideal for ads and sales"
     },
     {
         id: 11,
-        title: "Pack de Áudios x1",
-        price: "R$ 30,00",
-        originalPrice: "R$ 97,00",
+        title: "Audio Pack x1",
+        price: "$ 30.00",
+        originalPrice: "$ 97.00",
         category: "destaques",
         newCategory: "destaques",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "🎤 Pacote completo de áudios\n✅ Prontos para usar em anúncios\n🔥 Vozes profissionais\n⚡ Entrega automática\n📊 Formato otimizado para todas as plataformas"
+        description: "🎤 Complete audio pack\n✅ Ready to use in ads\n🔥 Professional voices\n⚡ Automatic delivery\n📊 Optimized format for all platforms"
     },
     {
         id: 12,
-        title: "Zap Voice Vitalício",
-        price: "R$ 49,90",
-        originalPrice: "R$ 79,90",
+        title: "Lifetime Zap Voice",
+        price: "$ 49.90",
+        originalPrice: "$ 79.90",
         category: "destaques",
         newCategory: "destaques",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "🎙️ Sistema de voz para WhatsApp\n♾️ Acesso vitalício\n✅ Vozes ultra realistas\n🚀 Economia de tempo garantida\n🎯 Suporte técnico incluído"
+        description: "🎙️ WhatsApp voice system\n♾️ Lifetime access\n✅ Ultra realistic voices\n🚀 Guaranteed time savings\n🎯 Technical support included"
     },
     {
         id: 13,
-        title: "Contas Instagram Antigas",
-        price: "R$ 25,00",
-        originalPrice: "R$ 55,00",
+        title: "Old Instagram Accounts",
+        price: "$ 25.00",
+        originalPrice: "$ 55.00",
         category: "social",
         newCategory: "social",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "📱 Contas do Instagram com histórico\n✅ Contas antigas e verificadas\n🔒 Seguras e prontas para uso\n⚡ Entrega imediata após pagamento\n📊 Ideais para marketing e divulgação"
+        description: "📱 Instagram accounts with history\n✅ Old and verified accounts\n🔒 Secure and ready to use\n⚡ Immediate delivery after payment\n📊 Ideal for marketing and outreach"
     },
     {
         id: 14,
-        title: "Contas Telegram Premium",
-        price: "R$ 15,00",
-        originalPrice: "R$ 35,00",
+        title: "Telegram Premium Accounts",
+        price: "$ 15.00",
+        originalPrice: "$ 35.00",
         category: "social",
         newCategory: "social",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "💬 Contas Telegram prontas para uso\n⭐ Acesso Premium incluído\n🚀 Ideal para grupos e canais\n✅ Entrega automática\n🔐 Seguras e verificadas"
+        description: "💬 Telegram accounts ready to use\n⭐ Premium access included\n🚀 Ideal for groups and channels\n✅ Automatic delivery\n🔐 Secure and verified"
     },
     {
         id: 15,
-        title: "Contas TikTok",
-        price: "R$ 20,00",
-        originalPrice: "R$ 47,00",
+        title: "TikTok Accounts",
+        price: "$ 20.00",
+        originalPrice: "$ 47.00",
         category: "social",
         newCategory: "social",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "🎵 Contas TikTok prontas\n✅ Com histórico de uso\n📈 Ideais para marketing viral\n⚡ Entrega imediata\n🎯 Alta taxa de engajamento"
+        description: "🎵 TikTok accounts ready\n✅ With usage history\n📈 Ideal for viral marketing\n⚡ Immediate delivery\n🎯 High engagement rate"
     },
     {
         id: 16,
-        title: "Grupo VIP Telegram",
-        price: "R$ 50,00",
+        title: "VIP Telegram Group",
+        price: "$ 50.00",
         category: "social",
         newCategory: "social",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "🔥 Acesso ao Grupo VIP\n💎 Conteúdo exclusivo diário\n🚀 Estratégias de crescimento\n👥 Networking com profissionais\n📚 Materiais exclusivos"
+        description: "🔥 Access to VIP Group\n💎 Daily exclusive content\n🚀 Growth strategies\n👥 Networking with professionals\n📚 Exclusive materials"
     },
     {
         id: 17,
-        title: "Pacote Divulgação Completa",
-        price: "R$ 249,00",
-        originalPrice: "R$ 529,00",
+        title: "Complete Promotion Pack",
+        price: "$ 249.00",
+        originalPrice: "$ 529.00",
         category: "social",
         newCategory: "social",
         image: "../assets/imagens/modelos-escaladas.jpg",
         type: "image",
         autoDelivery: true,
-        description: "📢 Pacote completo de divulgação\n🎯 Posts programados para todas as redes\n📊 Analytics e relatórios\n🚀 Alcance máximo garantido\n✅ Suporte especializado incluído"
+        description: "📢 Complete promotion pack\n🎯 Scheduled posts for all networks\n📊 Analytics and reports\n🚀 Guaranteed maximum reach\n✅ Specialized support included"
     }
 ];
 
-// Variáveis globais
+// Global variables
 let cartCount = 0;
 let currentCategory = 'all';
 let currentPurchase = null;
-// currentUser agora vem de auth-supabase.js
+// currentUser now comes from auth-supabase.js
 let pendingPurchase = null;
 let deliverySystem = {
     isActive: false,
@@ -355,16 +355,16 @@ let deliverySystem = {
     deliveredProducts: []
 };
 
-// Sistema de Login e LTV
+// Login and LTV System
 let userDatabase = {
     users: [],
     purchases: [],
     ltvData: {}
 };
 
-// Elementos DOM - serão obtidos dinamicamente quando necessário
+// DOM Elements - will be obtained dynamically when needed
 
-// Inicialização
+// Initialization
 document.addEventListener('DOMContentLoaded', function() {
     renderProducts();
     setupEventListeners();
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePurchaseCounter();
     initializeSocialProofNotifications();
 
-    // Aplicar animações aos elementos quando carregados
+    // Apply animations to elements when loaded
     const animatedElements = document.querySelectorAll('.stat-card, .product-card, .step');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
@@ -384,9 +384,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Configurar event listeners
+// Configure event listeners
 function setupEventListeners() {
-    // Dropdown de categorias
+    // Category dropdown
     const categorySelect = document.getElementById('categorySelect');
     if (categorySelect) {
         categorySelect.addEventListener('change', function(e) {
@@ -395,7 +395,7 @@ function setupEventListeners() {
         });
     }
 
-    // Botão "Navegar produtos!" no hero
+    // "Browse products!" button in hero
     const heroBtn = document.querySelector('.hero-btn');
     heroBtn.addEventListener('click', function() {
         document.querySelector('.products').scrollIntoView({
@@ -404,21 +404,21 @@ function setupEventListeners() {
     });
 }
 
-// Renderizar produtos em esteiras (Bloom Style)
+// Render products in carousels (Bloom Style)
 function renderProducts() {
-    console.log('🌸 Bloom: Iniciando renderização de produtos em esteiras...');
+    console.log('🌸 Bloom: Starting product carousel rendering...');
     
     const carouselsContainer = document.getElementById('categoryCarousels');
     if (!carouselsContainer) {
-        console.error('❌ Container de carrosséis não encontrado');
+        console.error('❌ Carousel container not found');
         return;
     }
     
     carouselsContainer.innerHTML = '';
     
-    // Renderizar cada categoria como uma esteira
+    // Render each category as a carousel
     categories.forEach(category => {
-        if (category.id === 'all') return; // Pular "Todos"
+        if (category.id === 'all') return; // Skip "All"
         
         const categoryProducts = products.filter(p => p.newCategory === category.id);
         if (categoryProducts.length === 0) return;
@@ -438,14 +438,14 @@ function renderProducts() {
         carouselsContainer.innerHTML += sectionHTML;
     });
     
-    console.log('✅ Esteiras renderizadas com sucesso');
+    console.log('✅ Carousels rendered successfully');
 }
 
-// Criar card de produto (Bloom Style)
+// Create product card (Bloom Style)
 function createProductCard(product) {
     const discount = product.originalPrice ? 
-        Math.round((1 - parseFloat(product.price.replace('R$ ', '').replace(',', '.')) / 
-        parseFloat(product.originalPrice.replace('R$ ', '').replace(',', '.'))) * 100) : 0;
+        Math.round((1 - parseFloat(product.price.replace('$ ', '').replace(',', '.')) / 
+        parseFloat(product.originalPrice.replace('$ ', '').replace(',', '.'))) * 100) : 0;
     
     return `
         <div class="product-card" data-product-id="${product.id}" onclick="addToCart(${product.id})">
@@ -460,7 +460,7 @@ function createProductCard(product) {
                 ${product.autoDelivery ? `
                     <div class="product-badge">
                         <i class="fas fa-truck"></i>
-                        ENTREGA AUTOMÁTICA
+                        AUTOMATIC DELIVERY
                     </div>
                 ` : ''}
             </div>
@@ -477,16 +477,13 @@ function createProductCard(product) {
                         ${product.price}
                         <i class="fas fa-truck" style="font-size: 16px;"></i>
                     </div>
-                    <div class="product-price-pix">
-                        <i class="fas fa-diamond" style="color: var(--secondary-orange);"></i>
-                        À vista no PIX
-                    </div>
+/* Removed product price pix */
                     <button class="product-card-button">
-                        Comprar Agora
+                        Buy Now
                     </button>
                 ` : `
                     <button class="product-card-button" onclick="event.stopPropagation(); contactWhatsApp();">
-                        Entrar em Contato
+                        Contact Us
                     </button>
                 `}
         </div>
@@ -583,10 +580,10 @@ function addToCart(productId) {
             return;
         }
         
-        // Usuário logado - prosseguir com compra normal
-        cartCount++;
-        updateCartCount();
-        openPaymentModal(product);
+        // Show product details or proceed to payment
+        if (product.price) {
+            openPaymentModal(product);
+        }
     }
 }
 
@@ -791,10 +788,6 @@ function openPaymentModal(product) {
             featuresSection.style.display = 'none';
         }
         
-        // Atualizar valor no PushinPay
-        const valor = parseFloat(product.price.replace('R$ ', '').replace(',', '.'));
-        PushinPayReal.atualizarValorPlano(valor, product.title);
-        
         // Mostrar aba de descrição por padrão
         switchTab('description');
         
@@ -808,9 +801,6 @@ function closePaymentModal() {
     if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        
-        // Parar verificação de pagamento
-        PushinPayReal.pararVerificacao();
     }
 }
 
@@ -822,211 +812,6 @@ function selectPaymentMethod(method) {
     
     // Adicionar classe active ao botão clicado
     event.target.closest('.payment-method-btn').classList.add('active');
-}
-
-async function createPayment() {
-    try {
-        // Validar se usuário está logado ANTES de criar PIX
-        if (!window.currentUser || !window.currentUser.id) {
-            console.error('❌ Usuário não está logado!');
-            alert('Você precisa estar logado para fazer uma compra. Faça login e tente novamente.');
-            closePaymentModal();
-            showLoginModal();
-            return;
-        }
-        
-        const btn = document.getElementById('createPaymentBtn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando PIX...';
-        
-        // Criar PIX
-        const pixData = await PushinPayReal.criarPix();
-        
-        // Extrair transaction_id
-        const transactionId = pixData.id || pixData.transaction_id || (pixData.data && pixData.data.id);
-        
-        // PRIMEIRO: Criar registro de compra no Supabase
-        let purchaseId = null;
-        if (window.currentUser && window.currentProduct && typeof SupabasePurchases !== 'undefined') {
-            try {
-                const purchaseResult = await SupabasePurchases.createPurchase({
-                    userId: window.currentUser.id,
-                    productId: window.currentProduct.id,
-                    productName: window.currentProduct.title,
-                    amount: window.currentProduct.priceNumeric || (PushinPayReal.estado.valorAtual / 100),
-                    status: 'pending',
-                    pixTransactionId: transactionId,
-                    modelId: selectedModel?.id || null,
-                    modelName: selectedModel?.name || null
-                });
-                
-                if (purchaseResult.success) {
-                    purchaseId = purchaseResult.data.id;
-                    console.log('✅ Compra salva no Supabase:', purchaseId);
-                }
-            } catch (error) {
-                console.error('❌ Erro ao salvar compra:', error);
-            }
-        }
-        
-        // DEPOIS: Salvar transação PIX no Supabase (com purchase_id já definido)
-        if (window.currentUser && transactionId && purchaseId && typeof SupabasePixTransactions !== 'undefined') {
-            try {
-                const pixAmount = PushinPayReal.estado.valorAtual / 100; // Converter centavos para reais
-                const qrCodeText = (
-                    pixData.qr_code || pixData.pix_code || pixData.emv ||
-                    (pixData.data && (pixData.data.qr_code || pixData.data.pix_code || pixData.data.emv))
-                );
-                const qrBase64 = (
-                    pixData.qr_code_base64 || pixData.qrcode_base64 || pixData.qrcode || pixData.qr_code_image ||
-                    (pixData.data && (pixData.data.qr_code_base64 || pixData.data.qrcode_base64 || pixData.data.qr_code_image))
-                );
-                
-                const result = await SupabasePixTransactions.createPixTransaction({
-                    purchaseId: purchaseId, // Agora temos o ID da compra
-                    transactionId: transactionId,
-                    qrCodeBase64: qrBase64,
-                    emvCode: qrCodeText,
-                    amount: pixAmount,
-                    status: 'pending',
-                    expiresAt: new Date(Date.now() + 30 * 60 * 1000).toISOString() // 30 minutos
-                });
-                
-                if (result.success) {
-                    console.log('✅ Transação PIX salva no Supabase:', result.data.id);
-                }
-            } catch (error) {
-                console.error('❌ Erro ao salvar transação PIX:', error);
-            }
-        }
-        
-        // Resolver propriedades possíveis de QR Code (diferentes respostas de API)
-        const qrBase64 = (
-            pixData.qr_code_base64 || pixData.qrcode_base64 || pixData.qrcode || pixData.qr_code_image ||
-            (pixData.data && (pixData.data.qr_code_base64 || pixData.data.qrcode_base64 || pixData.data.qr_code_image))
-        );
-        const qrCodeText = (
-            pixData.qr_code || pixData.pix_code || pixData.emv ||
-            (pixData.data && (pixData.data.qr_code || pixData.data.pix_code || pixData.data.emv))
-        );
-
-        // Exibir QR Code (preferir base64, senão usar imagem/código alternativo)
-        if (qrBase64) {
-            PushinPayReal.exibirQRCode(qrBase64);
-        } else if (qrCodeText) {
-            // Alguns provedores retornam apenas o código EMV; continuará exibido no campo de cópia
-            console.warn('QR base64 não encontrado; usando apenas código EMV/PIX');
-        }
-        
-        // Exibir código PIX copiável
-        if (qrCodeText) {
-            PushinPayReal.exibirCodigoPix(qrCodeText);
-        }
-        
-        // Iniciar verificação
-        PushinPayReal.iniciarVerificacao();
-        
-        // Abrir automaticamente a aba de pagamento
-        switchTab('payment');
-        
-        btn.innerHTML = '<i class="fas fa-check"></i> PIX Gerado';
-        
-    } catch (error) {
-        console.error('Erro ao criar pagamento:', error);
-        alert('Erro ao gerar PIX. Tente novamente.');
-        
-        const btn = document.getElementById('createPaymentBtn');
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-credit-card"></i> Gerar PIX';
-    }
-}
-
-function copyPixCode() {
-    const input = document.getElementById('pixCodeInput');
-    if (input && input.value) {
-        input.select();
-        input.setSelectionRange(0, 99999); // Para mobile
-        
-        try {
-            document.execCommand('copy');
-            
-            // Feedback visual melhorado
-            const btn = event.target.closest('.copy-btn');
-            const originalText = btn.innerHTML;
-            const originalBg = btn.style.backgroundColor;
-            
-            // Mudar para sucesso
-            btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-            btn.style.backgroundColor = '#28a745';
-            btn.style.transform = 'scale(1.05)';
-            
-            // Mostrar notificação
-            showCopyNotification();
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.backgroundColor = originalBg;
-                btn.style.transform = 'scale(1)';
-            }, 3000);
-            
-        } catch (err) {
-            console.error('Erro ao copiar:', err);
-            // Feedback de erro
-            const btn = event.target.closest('.copy-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-times"></i> Erro';
-            btn.style.backgroundColor = '#dc3545';
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.backgroundColor = '#f28625';
-            }, 2000);
-        }
-    } else {
-        // Se não há código para copiar
-        const btn = event.target.closest('.copy-btn');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-exclamation"></i> Vazio';
-        btn.style.backgroundColor = '#ffc107';
-        
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.backgroundColor = '#f28625';
-        }, 2000);
-    }
-}
-
-// Função para mostrar notificação de cópia
-function showCopyNotification() {
-    // Criar notificação
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: #28a745;
-        color: white;
-        padding: 15px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        z-index: 10000;
-        font-weight: 600;
-        animation: slideIn 0.3s ease-out;
-    `;
-    notification.innerHTML = '<i class="fas fa-check-circle"></i> Código PIX copiado!';
-    
-    // Adicionar ao body
-    document.body.appendChild(notification);
-    
-    // Remover após 3 segundos
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease-in';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
 }
 
 // Fechar modal clicando fora dele
@@ -2036,12 +1821,8 @@ function getProductDescription(product) {
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Sistema de Entregável após confirmação de compra</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Coleta de dados para LTV (Lifetime Value)</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Dashboard própria com tracking de leads</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Sistema PIX integrado sem sair da landing page</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ QR Code automático e verificação em tempo real</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Galeria interativa com blur effects</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Hover autoplay nos vídeos</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Marca d'água personalizada</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Facebook Pixel configurado</li>
+                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ PayPal integration with automatic verification</li>
+                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Facebook Pixel tracking</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Lead tracking + UTM parameters</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Entrega imediata do código fonte</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Assets + documentação completa</li>
@@ -2055,12 +1836,8 @@ function getProductDescription(product) {
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Sistema de Entregável após confirmação de compra</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Coleta de dados para LTV (Lifetime Value)</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Dashboard própria com tracking de leads</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Sistema PIX integrado sem sair da landing page</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ QR Code automático e verificação em tempo real</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Galeria interativa com blur effects</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Hover autoplay nos vídeos</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Marca d'água personalizada</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Facebook Pixel configurado</li>
+                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ PayPal integration with automatic verification</li>
+                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Facebook Pixel tracking</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Lead tracking + UTM parameters</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Entrega imediata do código fonte</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Assets + documentação completa</li>
@@ -2074,12 +1851,8 @@ function getProductDescription(product) {
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Sistema de Entregável após confirmação de compra</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Coleta de dados para LTV (Lifetime Value)</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Dashboard própria com tracking de leads</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Sistema PIX integrado sem sair da landing page</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ QR Code automático e verificação em tempo real</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Galeria interativa com blur effects</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Hover autoplay nos vídeos</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Marca d'água personalizada</li>
-                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Facebook Pixel configurado</li>
+                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ PayPal integration with automatic verification</li>
+                <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Facebook Pixel tracking</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Lead tracking + UTM parameters</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Entrega imediata do código fonte</li>
                 <li style="padding: 8px 0; color: #cccccc; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333333;">✅ Assets + documentação completa</li>
@@ -2175,12 +1948,7 @@ function getProductFeatures(product) {
             'Sistema de Entregável após confirmação de compra',
             'Coleta de dados para LTV (Lifetime Value)',
             'Dashboard própria com tracking de leads',
-            'Sistema PIX integrado sem sair da landing page',
-            'QR Code automático e verificação em tempo real',
-            'Galeria interativa com blur effects',
-            'Hover autoplay nos vídeos',
-            'Marca d\'água personalizada',
-            'Facebook Pixel configurado',
+/* Removed PIX features */
             'Lead tracking + UTM parameters',
             'Entrega imediata do código fonte',
             'Assets + documentação completa',
@@ -2193,12 +1961,7 @@ function getProductFeatures(product) {
             'Sistema de Entregável após confirmação de compra',
             'Coleta de dados para LTV (Lifetime Value)',
             'Dashboard própria com tracking de leads',
-            'Sistema PIX integrado sem sair da landing page',
-            'QR Code automático e verificação em tempo real',
-            'Galeria interativa com blur effects',
-            'Hover autoplay nos vídeos',
-            'Marca d\'água personalizada',
-            'Facebook Pixel configurado',
+/* Removed PIX features */
             'Lead tracking + UTM parameters',
             'Entrega imediata do código fonte',
             'Assets + documentação completa',
@@ -2328,7 +2091,7 @@ function createModelSelectionModal() {
                 <div class="model-selection-header">
                     <div class="model-selection-icon">👥</div>
                     <h2>Selecione um Modelo</h2>
-                    <p>Escolha o modelo que melhor se adequa ao seu produto</p>
+                    <p>Choose your payment method.</p>
                 </div>
                 <div class="model-selection-body">
                     <div class="product-info">
@@ -3023,10 +2786,7 @@ window.testVideo = testVideo;
 window.openPaymentModal = openPaymentModal;
 window.closePaymentModal = closePaymentModal;
 window.selectPaymentMethod = selectPaymentMethod;
-window.createPayment = createPayment;
-window.copyPixCode = copyPixCode;
-window.showCopyNotification = showCopyNotification;
-window.switchTab = switchTab;
+/* Removed PIX globals */
 window.showModelSelectionModal = showModelSelectionModal;
 window.selectModel = selectModel;
 window.selectModelAndBuy = selectModelAndBuy;

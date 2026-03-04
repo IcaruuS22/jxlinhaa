@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khaos Store - Perfil</title>
+    <title>jxlinhaa - Profile</title>
+    <link rel="icon" type="image/png" href="Images/favicon.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AeB__AKBC_jC1LW0dGXu-PdonXv1wtlnnXeDPTMW2_G2eaHRu0ieScoh0y4SSrirnNH863aB44vlHndk&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AXyt1I-9t880N1VdGX-IwEWdQBTCEeo7t6TxS2ClzVoiUIwf6BrzyNiBV5SDMMYcthQKl8IC4Ny9GE4d&currency=USD&locale=en_US"></script>
+
+    <!-- Security Scripts -->
+    <script src="frontend-secure/api-client.js"></script>
+    <script src="frontend-secure/auth-secure.js"></script>
 </head>
 <body>
     <!-- Sidebar Esquerda -->
@@ -15,38 +20,38 @@
         <nav class="main-nav">
             <a href="#" class="nav-item">
                 <i class="fas fa-home"></i>
-                <span>Página inicial</span>
+                <span>Home page</span>
             </a>
             <a href="#" class="nav-item">
                 <i class="far fa-bell"></i>
-                <span>Notificações</span>
+                <span>Notifications</span>
             </a>
             <a href="#" class="nav-item active">
                 <i class="far fa-comment-dots"></i>
-                <span>Mensagens</span>
+                <span>Messages</span>
                 <span class="badge">1</span>
             </a>
             <a href="#" class="nav-item">
                 <i class="far fa-bookmark"></i>
-                <span>Coleções</span>
+                <span>Collections</span>
             </a>
             <a href="#" class="nav-item">
                 <i class="fas fa-user-plus"></i>
-                <span>Assinaturas</span>
+                <span>Signatures</span>
             </a>
             <a href="#" class="nav-item">
                 <i class="far fa-user-circle"></i>
-                <span>Meu perfil</span>
+                <span>My profile</span>
             </a>
             <a href="#" class="nav-item">
                 <i class="fas fa-ellipsis-h"></i>
-                <span>Mais</span>
+                <span>More</span>
             </a>
         </nav>
         
         <button class="new-post-btn">
             <i class="fas fa-plus"></i>
-            <span>NOVA PUBLICAÇÃO</span>
+            <span>NEW PUBLICATION</span>
         </button>
     </aside>
 
@@ -60,11 +65,11 @@
             
             <div class="profile-header-info">
                 <h1 class="profile-name">
-                    Khaos.Store<i class="fas fa-check-circle verified"></i>
+                    jxlinhaa<i class="fas fa-check-circle verified"></i>
                 </h1>
                 <div class="profile-header-stats">
                 <span class="stat-item">
-                    <i class="far fa-image"></i> 388
+                    <i class="far fa-image"></i> 590
                 </span>
                 <span class="stat-separator">•</span>
                 <span class="stat-item">
@@ -101,13 +106,22 @@
             
             <div class="profile-details">
                 <h2 class="profile-username">
-                    KhaosStore<i class="fas fa-check-circle verified"></i>
+                    jxlinhaa<i class="fas fa-check-circle verified"></i>
                 </h2>
-                <p class="profile-handle">use.khaos <span class="separator">•</span> Visto Ontem</p>
+                <p class="profile-handle">_jxlinhaa <span class="separator">•</span> Seen today</p>
                 
-                <div class="profile-description">
-                    <p>faço ferramentas ou clono paginas pra players do hot ><</p>
+                <div class="profile-description" id="profileDescription">
+                    <p>Petite biracial eurasian at your service !!! ❤︎ Im a certified love bug ❤︎ come talk to me!</p>
+                    <p>✿ full nudity & explicit content 18+</p>
+                    <p>✿ solo picture sets & full length videos with lingerie, toys, role play and kinks</p>
+                    <p>✿ 1:1 chat</p>
+                    <p>✿ unlockable videos</p>
+                    <p>✿ i accept customs and ratings</p>
+                    <p>✿ extra content with RENEW ON</p>
+                    <p>✿ free videos for new subs!!!</p>
+                    <p>Im just one person answering messages and trying to serve up some fun content at the same time, I promise I’ll get back to you as soon as I can. Thank you for being patient with me!! ❤︎</p>
                 </div>
+                <button id="seeMoreBtn" class="see-more-btn">See more</button>
             </div>
             
             <div class="profile-actions">
@@ -122,37 +136,37 @@
 
         <!-- Seção de Assinatura -->
         <div class="subscription-section">
-            <h3 class="section-title">ASSINATURA</h3>
+            <h3 class="section-title">SIGNATURE</h3>
             
             <div class="promo-banner">
-                <h4>Oferta limitada: 75% de desconto nos primeiros 31 dias!</h4>
+                <h4>Limited-time offer: 75% off for the first 30 days!</h4>
                 <div class="promo-message">
                     <img src="Images/profile.jpg" alt="KhaosStore" class="promo-avatar">
-                    <p>faça demandas personalizadas comigo 😘😊</p>
+                    <p>Let's video call each other 😘😊</p>
                 </div>
             </div>
             
             <button class="subscribe-btn" id="subscribeMonthly">
-                <span>ASSINAR</span>
-                <span class="price">$3.75 por 31 dias</span>
+                <span>SUBSCRIBE</span>
+                <span class="price">$12.99 Monthly</span>
             </button>
             
-            <p class="normal-price">Preço Normal $15 /mês</p>
+            <p class="normal-price">Regular Price $69/month</p>
             
             <div class="subscription-packages">
                 <button class="package-toggle">
-                    <span>PACOTES DE ASSINATURA</span>
+                    <span>SUBSCRIPTION PACKAGES</span>
                     <i class="fas fa-chevron-up"></i>
                 </button>
                 
                 <div class="packages-list">
                     <button class="package-item" id="subscribeQuarterly">
-                        <span class="package-duration">3 MESES (33% off)</span>
-                        <span class="package-price">$9.99 total</span>
+                        <span class="package-duration">3 MONTHS (33% off)</span>
+                        <span class="package-price">$34.99 total</span>
                     </button>
                     <button class="package-item" id="subscribeYearly">
-                        <span class="package-duration">12 MESES (50% off)</span>
-                        <span class="package-price">$29.99 total</span>
+                        <span class="package-duration">12 MONTHS (50% off)</span>
+                        <span class="package-price">$59.90 total</span>
                     </button>
                 </div>
             </div>
@@ -161,10 +175,10 @@
         <!-- Tabs de Conteúdo -->
         <div class="content-tabs">
             <button class="tab active">
-                386 POSTAGENS
+                386 POSTS
             </button>
             <button class="tab">
-                457 MÍDIA
+                457 MEDIA
             </button>
         </div>
 
@@ -176,7 +190,7 @@
             <div class="preview-video blurred" id="previewVideo">
                 <video autoplay loop muted playsinline>
                     <source src="Images/central.mp4" type="video/mp4">
-                    Seu navegador não suporta vídeo.
+                    Your browser does not support video.
                 </video>
             </div>
             
@@ -197,7 +211,7 @@
                 </div>
                 
                 <button class="unlock-btn" id="unlockBtn">
-                    INSCREVE-TE PARA VER AS PUBLICAÇÕES DO UTILIZADOR
+                    SUBSCRIBE TO SEE USER POSTS
                 </button>
             </div>
         </div>
@@ -291,22 +305,22 @@
     <!-- Sidebar Direita -->
     <aside class="sidebar-right">
         <div class="subscription-card">
-            <h3>ASSINATURA</h3>
+            <h3>SIGNATURE</h3>
             
             <div class="promo-banner-small">
-                <h4>Oferta limitada: 75% de desconto nos primeiros 31 dias!</h4>
+                <h4>Limited-time offer: 75% off for the first 30 days!</h4>
                 <div class="promo-message-small">
                     <img src="Images/profile.jpg" alt="KhaosStore">
-                    <p>faça demandas personalizadas comigo 😘😊</p>
+                    <p>Let's video call each other 😘😊</p>
                 </div>
             </div>
             
             <button class="subscribe-btn-small" id="subscribeSidebar">
-                <span>ASSINAR</span>
-                <span class="price">$3.75 por 31 dias</span>
+                <span>SUBSCRIBE</span>
+                <span class="price">$12.99 Monthly</span>
             </button>
             
-            <p class="normal-price-small">Preço Normal $15 /mês</p>
+            <p class="normal-price-small">Normal Price $15 /month</p>
         </div>
         
         <div class="footer-links">
@@ -327,14 +341,16 @@
     <div id="paymentModal" class="payment-modal">
         <div class="payment-modal-content">
             <button class="payment-modal-close" id="closeModal">&times;</button>
-            <h2>Escolha sua forma de pagamento</h2>
+            <h2>Choose your payment method.</h2>
             <p class="payment-plan-info" id="paymentPlanInfo"></p>
             
             <!-- Campo de Email -->
             <div class="email-input-wrapper">
-                <label for="payerEmail">Seu email:</label>
-                <input type="email" id="payerEmail" placeholder="seuemail@example.com" required>
-                <small>Para identificar sua assinatura</small>
+                <label for="payerEmail">Your email:</label>
+                <div class="input-container">
+                    <input type="email" id="payerEmail" name="payer_email_unique" placeholder="seuemail@example.com" autocomplete="off" required>
+                </div>
+                <small>To identify your subscription</small>
             </div>
             
             <div id="paypal-button-container" class="paypal-button-modal"></div>
@@ -347,20 +363,20 @@
             <div class="success-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2>🎉 Pagamento Aprovado!</h2>
-            <p class="success-message">Sua assinatura foi ativada com sucesso!</p>
+            <h2>🎉 Payment Approved!</h2>
+            <p class="success-message">Your subscription was successfully activated!</p>
             <p class="plan-details" id="successPlanDetails"></p>
             
             <div class="delivery-section">
-                <h3>📦 Seu Conteúdo Está Pronto!</h3>
-                <p>Clique no botão abaixo para acessar:</p>
+                <h3>📦 Your Content is Ready!</h3>
+                <p>Click the button below to access:</p>
                 <a href="#" id="deliveryLink" class="delivery-button" target="_blank">
                     <i class="fas fa-gift"></i>
-                    ACESSAR MEU CONTEÚDO
+                    ACCESS MY CONTENT
                 </a>
             </div>
             
-            <button class="close-success-btn" id="closeSuccess">Fechar</button>
+            <button class="close-success-btn" id="closeSuccess">Close</button>
         </div>
     </div>
 

@@ -1,75 +1,74 @@
 # 🌸 Bloom
 
-Sistema de e-commerce com pagamentos PIX integrados e entrega automática.
+E-commerce system with integrated PayPal payments and automatic delivery.
 
-## 🌐 Deploy Automático
+## 🌐 Automatic Deploy
 
-**Domínio Principal:** `https://carregado.store` (Bloom)
+**Main Domain:** `https://carregado.store` (Bloom)
 
-### ✅ Configuração Atual:
-- **Frontend:** Deployado automaticamente no Vercel
-- **Backend:** Vercel Functions integrado
-- **Domínio:** carregado.store (configurado como padrão)
-- **SSL:** Automático e renovado automaticamente
+### ✅ Current Configuration:
+- **Frontend:** Automatically deployed on Vercel
+- **Backend:** Integrated Vercel Functions
+- **Domain:** carregado.store (configured as default)
+- **SSL:** Automatic and automatically renewed
 
-### 🚀 Como Fazer Deploy:
-1. **Faça mudanças** no código
-2. **Commit e push** para o GitHub:
+### 🚀 How to Deploy:
+1. **Make changes** to the code
+2. **Commit and push** to GitHub:
    ```bash
    git add .
-   git commit -m "Sua mudança"
+   git commit -m "Your change"
    git push
    ```
-3. **Deploy automático** no carregado.store
+3. **Automatic deploy** on carregado.store
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 bloom/
-├── frontend/              # 🎨 Código do frontend
-│   ├── index.html         # Página principal
-│   ├── styles.css         # Estilos
-│   ├── script.js          # JavaScript principal
-│   ├── frontend-secure/   # Arquivos de segurança
-│   └── payment-system/    # Sistema de pagamento
-├── assets/                # 🖼️ Imagens e mídias
-│   ├── imagens/           # Imagens principais
-│   └── modelos/           # Fotos dos modelos
-├── scripts/               # 🚀 Scripts de deploy
-├── docs/                  # 📚 Documentação
-└── package.json           # 📦 Configuração principal
+├── frontend/              # 🎨 Frontend code
+│   ├── index.html         # Main page
+│   ├── styles.css         # Styles
+│   ├── script.js          # Main JavaScript
+│   └── frontend-secure/   # Security files
+├── assets/                # 🖼️ Images and media
+│   ├── imagens/           # Main images
+│   └── modelos/           # Model photos
+├── scripts/               # 🚀 Deploy scripts
+├── docs/                  # 📚 Documentation
+└── package.json           # 📦 Main configuration
 ```
 
-## 🔧 Desenvolvimento Local
+## 🔧 Local Development
 
 ```bash
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Iniciar servidor de desenvolvimento
+# Start development server
 cd frontend
 npm start
 
-# Ou usar serve diretamente
+# Or use serve directly
 npx serve -s . -l 3000
 ```
 
-## 🌐 URLs de Produção
+## 🌐 Production URLs
 - **Site:** https://carregado.store
 - **API:** https://carregado.store/api/*
-- **SSL:** Automático
-- **Deploy:** Automático a cada push
+- **SSL:** Automatic
+- **Deploy:** Automatic on every push
 
-## 🛠️ Funcionalidades
+## 🛠️ Features
 
-- ✅ **Sistema de Pagamento PIX** - Integrado com QR Code automático
-- ✅ **Entrega Automática** - Liberação imediata após pagamento
-- ✅ **Sistema de Login** - Autenticação segura
-- ✅ **Carrossel de Modelos** - Seleção interativa
-- ✅ **Responsivo** - Funciona em todos os dispositivos
-- ✅ **Deploy Automático** - Vercel + GitHub
+- ✅ **PayPal Payment System** - Integrated with automatic verification
+- ✅ **Automatic Delivery** - Immediate release after payment
+- ✅ **Login System** - Secure authentication
+- ✅ **Model Carousel** - Interactive selection
+- ✅ **Responsive** - Works on all devices
+- ✅ **Automatic Deploy** - Vercel + GitHub
 
-## 📱 Contato
+## 📱 Contact
 
 - **Instagram:** [@carregado.ads](https://instagram.com/carregado.ads)
 - **WhatsApp:** [(71) 99292-6937](https://wa.me/5571992926937)
@@ -77,4 +76,4 @@ npx serve -s . -l 3000
 
 ---
 
-**© 2024 Bloom. Todos os direitos reservados.**
+**© 2024 Bloom. All rights reserved.**

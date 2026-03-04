@@ -1,33 +1,57 @@
 const { Sequelize } = require('sequelize');
 
-// Configurar SQLite
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite',
-    logging: false, // Set to console.log to see SQL queries
-    define: {
-        timestamps: true,
-        underscored: true
-    }
-});
+// Database configuration
+let sequelize;
 
-// Testar conexão
+if (process.env.DATABASE_URL) {
+    // Connect to PostgreSQL (Supabase/Vercel)
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+        dialect: 'postgres',
+        protocol: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        },
+        logging: false,
+        define: {
+            timestamps: true,
+            underscored: true,
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+        }
+    });
+} else {
+    // Local SQLite
+    sequelize = new Sequelize({
+        dialect: 'sqlite',
+        storage: './database.sqlite',
+        logging: false,
+        define: {
+            timestamps: true,
+            underscored: true
+        }
+    });
+}
+
+// Test connection
 async function testConnection() {
     try {
         await sequelize.authenticate();
-        console.log('✅ Conexão com banco de dados estabelecida com sucesso!');
+        console.log('✅ Database connection established successfully!');
     } catch (error) {
-        console.error('❌ Erro ao conectar com banco de dados:', error);
+        console.error('❌ Error connecting to database:', error);
     }
 }
 
-// Sincronizar banco de dados
+// Sync database
 async function syncDatabase() {
     try {
         await sequelize.sync({ alter: true });
-        console.log('✅ Banco de dados sincronizado!');
+        console.log('✅ Database synchronized!');
     } catch (error) {
-        console.error('❌ Erro ao sincronizar banco:', error);
+        console.error('❌ Error synchronizing database:', error);
     }
 }
 

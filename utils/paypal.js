@@ -1,7 +1,7 @@
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 const axios = require('axios');
 
-// Configuração do ambiente PayPal
+// PayPal environment configuration
 function getPayPalEnvironment() {
     const clientId = process.env.PAYPAL_CLIENT_ID;
     const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
@@ -13,12 +13,12 @@ function getPayPalEnvironment() {
     }
 }
 
-// Cliente PayPal
+// PayPal Client
 function getPayPalClient() {
     return new checkoutNodeJssdk.core.PayPalHttpClient(getPayPalEnvironment());
 }
 
-// Criar order no PayPal
+// Create PayPal order
 async function createOrder(amount, description, planName) {
     const request = new checkoutNodeJssdk.orders.OrdersCreateRequest();
     request.prefer("return=representation");
@@ -30,7 +30,7 @@ async function createOrder(amount, description, planName) {
                 currency_code: 'USD',
                 value: amount.toString()
             },
-            custom_id: planName // Armazenar nome do plano
+            custom_id: planName // Store plan name
         }]
     });
 
@@ -43,7 +43,7 @@ async function createOrder(amount, description, planName) {
             data: response.result
         };
     } catch (error) {
-        console.error('Erro ao criar order PayPal:', error);
+        console.error('Error creating PayPal order:', error);
         return {
             success: false,
             error: error.message
@@ -51,7 +51,7 @@ async function createOrder(amount, description, planName) {
     }
 }
 
-// Capturar pagamento após aprovação
+// Capture payment after approval
 async function capturePayment(orderId) {
     const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderId);
     request.requestBody({});
@@ -64,7 +64,7 @@ async function capturePayment(orderId) {
             data: response.result
         };
     } catch (error) {
-        console.error('Erro ao capturar pagamento:', error);
+        console.error('Error capturing payment:', error);
         return {
             success: false,
             error: error.message
@@ -72,7 +72,7 @@ async function capturePayment(orderId) {
     }
 }
 
-// Obter access token do PayPal
+// Get PayPal access token
 async function getAccessToken() {
     const auth = Buffer.from(
         `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`
@@ -95,18 +95,18 @@ async function getAccessToken() {
         );
         return response.data.access_token;
     } catch (error) {
-        console.error('Erro ao obter access token:', error);
+        console.error('Error getting access token:', error);
         return null;
     }
 }
 
-// Verificar autenticidade do webhook
+// Verify webhook authenticity
 async function verifyWebhookSignature(webhookEvent, headers) {
     const webhookId = process.env.PAYPAL_WEBHOOK_ID;
     
     if (!webhookId) {
-        console.warn('⚠️ PAYPAL_WEBHOOK_ID não configurado, pulando verificação');
-        return true; // Em desenvolvimento, aceitar sem verificação
+        console.warn('⚠️ PAYPAL_WEBHOOK_ID not configured, skipping verification');
+        return true; // In development, accept without verification
     }
 
     const accessToken = await getAccessToken();
@@ -142,23 +142,23 @@ async function verifyWebhookSignature(webhookEvent, headers) {
         
         return response.data.verification_status === 'SUCCESS';
     } catch (error) {
-        console.error('Erro ao verificar webhook:', error.response?.data || error.message);
+        console.error('Error verifying webhook:', error.response?.data || error.message);
         return false;
     }
 }
 
-// Calcular data de expiração
+// Calculate expiration date
 function calculateExpirationDate(plan) {
     const now = new Date();
     
     switch(plan.toLowerCase()) {
-        case 'mensal':
+        case 'monthly':
             now.setMonth(now.getMonth() + 1);
             break;
-        case 'trimestral':
+        case 'quarterly':
             now.setMonth(now.getMonth() + 3);
             break;
-        case 'anual':
+        case 'annual':
             now.setFullYear(now.getFullYear() + 1);
             break;
         default:
@@ -175,5 +175,3 @@ module.exports = {
     calculateExpirationDate,
     getAccessToken
 };
-
-

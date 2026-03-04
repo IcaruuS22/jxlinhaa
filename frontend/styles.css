@@ -2384,74 +2384,7 @@ table tr:last-child td {
     margin: 0;
 }
 
-.pix-code-container {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #1a1a1a;
-    border: 2px solid #f28625;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(242, 134, 37, 0.2);
-}
-
-.pix-code-container label {
-    color: #f28625;
-    font-size: 16px;
-    margin-bottom: 12px;
-    display: block;
-    font-weight: 700;
-    text-align: center;
-}
-
-.pix-input-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.pix-input-group input {
-    flex: 1;
-    background-color: #ffffff;
-    color: #333333;
-    border: 2px solid #f28625;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: monospace;
-    font-weight: 600;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.pix-input-group input:focus {
-    outline: none;
-    border-color: #ff7814;
-    box-shadow: 0 0 0 3px rgba(242, 134, 37, 0.2);
-}
-
-.copy-btn {
-    background-color: #f28625;
-    color: #ffffff;
-    border: none;
-    padding: 15px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 16px;
-    font-weight: 600;
-    min-width: 120px;
-    box-shadow: 0 2px 5px rgba(242, 134, 37, 0.3);
-}
-
-.copy-btn:hover {
-    background-color: #ff7814;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(242, 134, 37, 0.4);
-}
-
-.copy-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(242, 134, 37, 0.3);
-}
+/* Removed PIX styles */
 
 /* Animações para notificações */
 @keyframes slideIn {
@@ -2822,9 +2755,7 @@ table tr:last-child td {
         gap: 10px;
     }
     
-    .pix-input-group {
-        flex-direction: column;
-        gap: 8px;
+    /* Removed PIX input group responsive */   gap: 8px;
     }
     
     .copy-btn {
@@ -3734,13 +3665,7 @@ table tr:last-child td {
     margin-bottom: 5px;
 }
 
-.product-price-pix {
-    font-size: 12px;
-    color: var(--light-cream);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
+/* Removendo estilos do sistema de pagamento PIX antigo */
 
 .product-card-button {
     width: 100%;

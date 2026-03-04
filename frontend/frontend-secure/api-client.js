@@ -126,23 +126,6 @@ class SecureAPIClient {
   // PAGAMENTOS
   // ========================================
   
-  async createPix(amount, productId, productName, modelId = null, modelName = null) {
-    return await this.request('/payment/create-pix', {
-      method: 'POST',
-      body: JSON.stringify({
-        amount,
-        productId,
-        productName,
-        modelId,
-        modelName
-      })
-    });
-  }
-
-  async checkPixStatus(transactionId) {
-    return await this.request(`/payment/status/${transactionId}`);
-  }
-
   async getUserPurchases() {
     return await this.request('/payment/purchases');
   }

@@ -1,45 +1,45 @@
-// Sistema de Autenticação Seguro - Frontend
-// Usa apenas APIs públicas do backend
+// Secure Authentication System - Frontend
+// Uses only public backend APIs
 
-// Estado global do usuário
+// Global user state
 window.currentUser = window.currentUser || null;
 
 // ========================================
-// INICIALIZAÇÃO
+// INITIALIZATION
 // ========================================
 async function initSecureAuth() {
-  console.log('🔐 Inicializando autenticação segura...');
+  console.log('🔐 Initializing secure authentication...');
   
   try {
-    // Verificar se há token válido
+    // Check if there is a valid token
     const result = await apiClient.verifyToken();
     
     if (result.success && result.user) {
       window.currentUser = result.user;
-      console.log('✅ Usuário logado:', window.currentUser.email);
+      console.log('✅ User logged in:', window.currentUser.email);
       await updateUserInterface();
       
-      // Iniciar sistema de entrega automática
+      // Start automatic delivery system
       if (typeof DeliverySystem !== 'undefined' && DeliverySystem.start) {
         DeliverySystem.start();
       }
     } else {
-      console.log('👤 Nenhum usuário logado');
+      console.log('👤 No user logged in');
       window.currentUser = null;
       
-      // Parar sistema de entrega automática
+      // Stop automatic delivery system
       if (typeof DeliverySystem !== 'undefined' && DeliverySystem.stop) {
         DeliverySystem.stop();
       }
     }
   } catch (error) {
-    console.error('❌ Erro ao inicializar auth:', error);
+    console.error('❌ Error initializing auth:', error);
     window.currentUser = null;
   }
 }
 
 // ========================================
-// REGISTRO
+// REGISTRATION
 // ========================================
 async function handleRegisterSecure() {
   const name = document.getElementById('registerName').value.trim();
@@ -49,40 +49,40 @@ async function handleRegisterSecure() {
   const password = document.getElementById('registerPassword').value;
   const confirmPassword = document.getElementById('registerConfirmPassword').value;
 
-  // Validações básicas
+  // Basic validations
   if (!name || !email || !phone || !password || !confirmPassword) {
-    showNotification('Por favor, preencha todos os campos', 'error');
+    showNotification('Please fill in all fields', 'error');
     return;
   }
 
   if (password !== confirmPassword) {
-    showNotification('As senhas não coincidem', 'error');
+    showNotification('Passwords do not match', 'error');
     return;
   }
 
   if (password.length < 6) {
-    showNotification('A senha deve ter pelo menos 6 caracteres', 'error');
+    showNotification('Password must be at least 6 characters long', 'error');
     return;
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    showNotification('Email inválido', 'error');
+    showNotification('Invalid email', 'error');
     return;
   }
 
-  // Mostrar loading
+  // Show loading
   const btn = document.querySelector('.register-form button[type="submit"]');
   if (!btn) {
-    console.error('❌ Botão de registro não encontrado');
+    console.error('❌ Register button not found');
     return;
   }
   const originalText = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
 
   try {
-    // Registrar via API segura
+    // Register via secure API
     const result = await apiClient.register(name, email, password, phone);
 
     if (result.success) {
@@ -90,7 +90,7 @@ async function handleRegisterSecure() {
       await updateUserInterface();
       
       if (typeof showNotification === 'function') {
-        showNotification('Conta criada com sucesso! 🎉', 'success');
+        showNotification('Account created successfully! 🎉', 'success');
       }
       
       if (typeof closeLoginModal === 'function') {

@@ -24,18 +24,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Servir arquivos estáticos (front-end)
 app.use(express.static(path.join(__dirname)));
 
-// Log de requisições
+// Request logging
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
     next();
 });
 
-// Rotas da API
+// API Routes
 app.use('/api', paymentsRoutes);
 app.use('/api', webhooksRoutes);
 app.use('/api', subscriptionsRoutes);
 
-// Rota de informações da API
+// API Info Route
 app.get('/api', (req, res) => {
     res.json({
         message: 'CarregadoStore Backend API',
@@ -57,14 +57,14 @@ app.get('/api', (req, res) => {
     });
 });
 
-// Rota de health check
+// Health check route
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Handler de erros
+// Error handler
 app.use((err, req, res, next) => {
-    console.error('Erro não tratado:', err);
+    console.error('Unhandled error:', err);
     res.status(500).json({
         success: false,
         error: 'Internal Server Error',
@@ -72,24 +72,24 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Inicializar servidor
+// Initialize server
 async function startServer() {
     try {
-        // Testar conexão com banco
+        // Test database connection
         await testConnection();
         
-        // Sincronizar modelos
+        // Synchronize models
         await syncDatabase();
         
-        // Iniciar servidor
+        // Start server
         app.listen(PORT, () => {
-            console.log(`\n🚀 Servidor rodando em http://localhost:${PORT}`);
-            console.log(`📚 Documentação: http://localhost:${PORT}`);
+            console.log(`\n🚀 Server running at http://localhost:${PORT}`);
+            console.log(`📚 Documentation: http://localhost:${PORT}`);
             console.log(`💳 PayPal Mode: ${process.env.PAYPAL_MODE || 'sandbox'}`);
-            console.log(`\n✅ Backend pronto para receber requisições!\n`);
+            console.log(`\n✅ Backend ready to receive requests!\n`);
         });
     } catch (error) {
-        console.error('❌ Erro ao iniciar servidor:', error);
+        console.error('❌ Error starting server:', error);
         process.exit(1);
     }
 }
@@ -98,7 +98,7 @@ startServer();
 
 // Graceful shutdown
 process.on('SIGINT', () => {
-    console.log('\n\n👋 Encerrando servidor...');
+    console.log('\n\n👋 Shutting down server...');
     process.exit(0);
 });
 

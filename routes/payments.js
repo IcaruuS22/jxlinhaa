@@ -5,7 +5,7 @@ const User = require('../models/User');
 const Subscription = require('../models/Subscription');
 
 // POST /api/create-order
-// Criar order no PayPal
+// Create PayPal order
 router.post('/create-order', async (req, res) => {
     try {
         const { amount, plan, email } = req.body;
@@ -13,36 +13,36 @@ router.post('/create-order', async (req, res) => {
         if (!amount || !plan || !email) {
             return res.status(400).json({
                 success: false,
-                error: 'Dados incompletos (amount, plan, email)'
+                error: 'Incomplete data (amount, plan, email)'
             });
         }
 
-        // Verificar/criar usuário
+        // Check/create user
         let user = await User.findOne({ where: { email } });
         if (!user) {
             user = await User.create({ email });
         }
 
-        // Definir descrição
+        // Define description
         const descriptions = {
-            'Mensal': 'Assinatura Mensal (31 dias) - CarregadoStore',
-            'Trimestral': 'Assinatura Trimestral (3 meses) - CarregadoStore',
-            'Anual': 'Assinatura Anual (12 meses) - CarregadoStore'
+            'Monthly': 'Monthly Subscription (31 days) - _jxlinhaa',
+            'Quarterly': 'Quarterly Subscription (3 months) - _jxlinhaa',
+            'Annual': 'Annual Subscription (12 months) - Carreg_jxlinhaaa'
         };
 
-        const description = descriptions[plan] || `Assinatura ${plan} - CarregadoStore`;
+        const description = descriptions[plan] || `Subscription ${plan} - Carreg_jxlinhaa`;
 
-        // Criar order no PayPal
+        // Create order in PayPal
         const result = await createOrder(amount, description, plan);
 
         if (!result.success) {
             return res.status(500).json({
                 success: false,
-                error: 'Erro ao criar order no PayPal'
+                error: 'Error creating PayPal order'
             });
         }
 
-        // Salvar no banco como pending
+        // Save in DB as pending
         await Subscription.create({
             user_id: user.id,
             plan: plan,
@@ -59,7 +59,7 @@ router.post('/create-order', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Erro em create-order:', error);
+        console.error('Error in create-order:', error);
         res.status(500).json({
             success: false,
             error: error.message
@@ -68,7 +68,7 @@ router.post('/create-order', async (req, res) => {
 });
 
 // POST /api/capture-payment
-// Capturar pagamento após aprovação do usuário
+// Capture payment after user approval
 router.post('/capture-payment', async (req, res) => {
     try {
         const { orderId } = req.body;
@@ -76,24 +76,24 @@ router.post('/capture-payment', async (req, res) => {
         if (!orderId) {
             return res.status(400).json({
                 success: false,
-                error: 'Order ID não fornecido'
+                error: 'Order ID not provided'
             });
         }
 
-        // Capturar pagamento no PayPal
+        // Capture payment in PayPal
         const result = await capturePayment(orderId);
 
         if (!result.success) {
             return res.status(500).json({
                 success: false,
-                error: 'Erro ao capturar pagamento'
+                error: 'Error capturing payment'
             });
         }
 
         const captureData = result.data;
         const transactionId = captureData.purchase_units[0].payments.captures[0].id;
 
-        // Buscar subscription pendente
+        // Search for pending subscription
         const subscription = await Subscription.findOne({
             where: {
                 paypal_order_id: orderId,
@@ -102,9 +102,9 @@ router.post('/capture-payment', async (req, res) => {
         });
 
         if (!subscription) {
-            console.warn('⚠️ Subscription não encontrada para order:', orderId);
+            console.warn('⚠️ Subscription not found for order:', orderId);
         } else {
-            // Atualizar status para ativo
+            // Update status to active
             const expiresAt = calculateExpirationDate(subscription.plan);
             
             await subscription.update({
@@ -113,7 +113,7 @@ router.post('/capture-payment', async (req, res) => {
                 expires_at: expiresAt
             });
 
-            console.log(`✅ Assinatura ativada: ${subscription.payer_email} - ${subscription.plan}`);
+            console.log(`✅ Subscription activated: ${subscription.payer_email} - ${subscription.plan}`);
         }
 
         res.json({
@@ -123,7 +123,7 @@ router.post('/capture-payment', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Erro em capture-payment:', error);
+        console.error('Error in capture-payment:', error);
         res.status(500).json({
             success: false,
             error: error.message

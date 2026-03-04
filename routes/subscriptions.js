@@ -5,7 +5,7 @@ const User = require('../models/User');
 const Subscription = require('../models/Subscription');
 
 // GET /api/subscription-status/:email
-// Verificar se usuário tem assinatura ativa
+// Check if user has active subscription
 router.get('/subscription-status/:email', async (req, res) => {
     try {
         const { email } = req.params;
@@ -13,29 +13,29 @@ router.get('/subscription-status/:email', async (req, res) => {
         if (!email) {
             return res.status(400).json({
                 success: false,
-                error: 'Email não fornecido'
+                error: 'Email not provided'
             });
         }
 
-        // Buscar usuário
+        // Search for user
         const user = await User.findOne({ where: { email } });
 
         if (!user) {
             return res.json({
                 success: true,
                 hasActiveSubscription: false,
-                message: 'Usuário não encontrado'
+                message: 'User not found'
             });
         }
 
-        // Buscar assinatura ativa e não expirada
+        // Search for active and non-expired subscription
         const now = new Date();
         const subscription = await Subscription.findOne({
             where: {
                 user_id: user.id,
                 status: 'active',
                 expires_at: {
-                    [Op.gt]: now // Maior que agora (não expirou)
+                    [Op.gt]: now // Greater than now (not expired)
                 }
             },
             order: [['created_at', 'DESC']]
@@ -56,12 +56,12 @@ router.get('/subscription-status/:email', async (req, res) => {
             res.json({
                 success: true,
                 hasActiveSubscription: false,
-                message: 'Nenhuma assinatura ativa encontrada'
+                message: 'No active subscription found'
             });
         }
 
     } catch (error) {
-        console.error('Erro em subscription-status:', error);
+        console.error('Error in subscription-status:', error);
         res.status(500).json({
             success: false,
             error: error.message
@@ -69,7 +69,7 @@ router.get('/subscription-status/:email', async (req, res) => {
     }
 });
 
-// GET /api/subscriptions (Admin - listar todas)
+// GET /api/subscriptions (Admin - list all)
 router.get('/subscriptions', async (req, res) => {
     try {
         const subscriptions = await Subscription.findAll({
@@ -85,7 +85,7 @@ router.get('/subscriptions', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Erro ao listar subscriptions:', error);
+        console.error('Error listing subscriptions:', error);
         res.status(500).json({
             success: false,
             error: error.message

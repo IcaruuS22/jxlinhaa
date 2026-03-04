@@ -295,6 +295,30 @@ body {
     margin-top: 12px;
     line-height: 1.5;
     font-size: 14px;
+    position: relative;
+    max-height: 100px; /* Limite inicial */
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.profile-description.expanded {
+    max-height: 1000px; /* Grande o suficiente para mostrar tudo */
+}
+
+.see-more-btn {
+    background: none;
+    border: none;
+    color: var(--primary-blue);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 0;
+    margin-top: 5px;
+    display: none; /* Escondido por padrão, mostrado via JS se necessário */
+}
+
+.see-more-btn:hover {
+    text-decoration: underline;
 }
 
 .profile-description p {
