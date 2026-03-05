@@ -910,6 +910,8 @@ body {
     box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
     border: 1px solid rgba(0, 217, 255, 0.2);
     animation: slideUp 0.3s ease;
+    max-height: 90vh; /* Limita a altura máxima a 90% da tela */
+    overflow-y: auto;   /* Adiciona scroll vertical se o conteúdo ultrapassar */
 }
 
 .payment-modal-close {
