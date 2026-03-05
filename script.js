@@ -6,13 +6,13 @@
 const DELIVERY_CONFIG = {
     // Default link for all plans
     // ⚠️ CHANGE THIS LINK to your real delivery link
-    defaultLink: 'https://www.example.com/seu-conteudo',
+    defaultLink: 'https://drive.google.com/drive/folders/1r13wcxDGkkC6GecQwI8TdKeSbJxfz82h',
     
     // Or different links per plan (optional)
     planLinks: {
-        'Monthly': 'https://www.example.com/mensal',
-        'Quarterly': 'https://www.example.com/trimestral',
-        'Annual': 'https://www.example.com/anual'
+        'Monthly': 'https://drive.google.com/drive/folders/1r13wcxDGkkC6GecQwI8TdKeSbJxfz82h',
+        'Quarterly': 'https://drive.google.com/drive/folders/1r13wcxDGkkC6GecQwI8TdKeSbJxfz82h',
+        'Annual': 'https://drive.google.com/drive/folders/1r13wcxDGkkC6GecQwI8TdKeSbJxfz82h'
     },
     
     // Use plan-specific links? (true/false)
