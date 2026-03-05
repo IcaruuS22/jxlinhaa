@@ -23,6 +23,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Servir arquivos estáticos (front-end)
 app.use(express.static(path.join(__dirname)));
+app.use('/frontend', express.static(path.join(__dirname, 'frontend')));
+app.use('/Images', express.static(path.join(__dirname, 'Images')));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 // Request logging
 app.use((req, res, next) => {

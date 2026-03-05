@@ -4,7 +4,8 @@ const { Sequelize } = require('sequelize');
 let sequelize;
 
 if (process.env.DATABASE_URL) {
-    // Connect to PostgreSQL (Supabase/Vercel)
+    // Connect to PostgreSQL (Supabase/Vercel/Render)
+    // Add ?sslmode=no-verify if needed, but Sequelize handles it via dialectOptions
     sequelize = new Sequelize(process.env.DATABASE_URL, {
         dialect: 'postgres',
         protocol: 'postgres',
@@ -12,9 +13,16 @@ if (process.env.DATABASE_URL) {
             ssl: {
                 require: true,
                 rejectUnauthorized: false
-            }
+            },
+            keepAlive: true
         },
         logging: false,
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        },
         define: {
             timestamps: true,
             underscored: true,
