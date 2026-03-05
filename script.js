@@ -44,13 +44,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adicionar animação suave ao scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            const href = this.getAttribute('href');
+            
+            // Only act on valid on-page links (e.g., #section, not just #)
+            if (href && href.length > 1 && href.startsWith('#')) {
+                try {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault(); // Prevent default only if it's a valid scroll target
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                } catch (err) {
+                    // The href is not a valid selector, let the browser handle it.
+                    console.warn('Smooth scroll failed for selector:', href);
+                }
             }
         });
     });
