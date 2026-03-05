@@ -733,10 +733,20 @@ function openPaymentModal(planName, planPrice, planDescription) {
             },
             onError: function(err) {
                 console.error('Payment error:', err);
-                // Only show alert if it's not a window close/cancel error
-                if (err.message && !err.message.includes('popup_close')) {
-                    alert('Error processing payment. Please try again.');
+                
+                // Better error message for the user
+                let msg = 'Error processing payment. Please try again.';
+                
+                if (err.message) {
+                    if (err.message.includes('popup_close')) {
+                        return; // User just closed the popup, don't show alert
+                    }
+                    if (err.message.includes('ENETUNREACH')) {
+                        msg = 'Server connection error. Please wait a moment and try again.';
+                    }
                 }
+                
+                alert(msg);
             },
             onCancel: function(data) {
                 console.log('Payment canceled by user');

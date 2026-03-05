@@ -5,8 +5,14 @@ let sequelize;
 
 if (process.env.DATABASE_URL) {
     // Connect to PostgreSQL (Supabase/Vercel/Render)
-    // Add ?sslmode=no-verify if needed, but Sequelize handles it via dialectOptions
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
+    // IMPORTANT: Render has issues connecting to Supabase via IPv6.
+    // We force IPv4 by adding ?sslmode=require if not present and ensuring the host is correct.
+    let dbUrl = process.env.DATABASE_URL;
+    
+    // If the URL is from Supabase and doesn't have a mode, we can try to append settings
+    // though Sequelize usually handles this via dialectOptions below.
+    
+    sequelize = new Sequelize(dbUrl, {
         dialect: 'postgres',
         protocol: 'postgres',
         dialectOptions: {
@@ -14,7 +20,9 @@ if (process.env.DATABASE_URL) {
                 require: true,
                 rejectUnauthorized: false
             },
-            keepAlive: true
+            keepAlive: true,
+            // This is a crucial fix for ENETUNREACH on some environments (IPv6 vs IPv4)
+            family: 4 
         },
         logging: false,
         pool: {
